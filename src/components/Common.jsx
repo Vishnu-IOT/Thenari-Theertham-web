@@ -19,7 +19,7 @@ export function SectionHeading({ label, title, sub }) {
       {sub && <p className="sub">{sub}</p>}
       <div className="divider" aria-hidden="true"><span /></div>
     </div>
-  )
+ )
 }
 export function Section({ id, className = '', children }) {
   return <section id={id} className={`section ${className}`}><div className="container">{children}</div></section>

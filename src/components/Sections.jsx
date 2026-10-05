@@ -10,6 +10,8 @@ import {
 } from "../data/templeData.js";
 import rama from "../../public/images/temple/heritage.png";
 import { RotatingChakra } from "./RotatingChakra.jsx";
+import { useRef } from "react";
+import { SectionTitle } from "./ui.jsx";
 
 const PH = (v) => v || "[Not yet provided]";
 
@@ -152,25 +154,70 @@ export function TempleTimings() {
 }
 
 export function FestivalSection({ all = false }) {
-  const list = all ? festivals : festivals.slice(0, 3);
+  // const list = all ? festivals : festivals.slice(0, 3);
+  // return (
+  // <Section id="festivals" className="tint">
+  //   <SectionHeading label="Celebrations" title="Festivals & events" />
+  //   <div className="fest-grid">
+  //     {list.map((f) => (
+  //       <Reveal key={f.name}>
+  //         <FestivalCard festival={f} />
+  //       </Reveal>
+  //     ))}
+  //   </div>
+  //   {!all && (
+  //     <p className="center">
+  //       <Link className="btn btn-maroon" to="/festivals">
+  //         All Festivals →
+  //       </Link>
+  //     </p>
+  //   )}
+  // </Section>
+  const rail = useRef(null);
+  const go = (dir) =>
+    rail.current?.scrollBy({
+      left: dir * Math.min(360, rail.current.clientWidth * 0.8),
+      behavior: "smooth",
+    });
+  const list = festivals.slice(0, 6);
   return (
-    <Section id="festivals" className="tint">
-      <SectionHeading label="Celebrations" title="Festivals & events" />
-      <div className="fest-grid">
-        {list.map((f) => (
-          <Reveal key={f.name}>
-            <FestivalCard festival={f} />
-          </Reveal>
-        ))}
+    <section className="section occasions">
+      <div className="container">
+        <SectionTitle
+          light
+          kicker="Through the year"
+          title="Festivals and observances"
+          sub="Dates change every year, so please confirm with the temple before you plan a visit."
+        />
       </div>
-      {!all && (
-        <p className="center">
-          <Link className="btn btn-maroon" to="/festivals">
-            All Festivals →
+      <div className="rail-wrap">
+        <div
+          className="rail"
+          ref={rail}
+          tabIndex={0}
+          aria-label="Festivals, scroll sideways"
+        >
+          {list.map((f) => (
+            <article className="fest" key={f.name}>
+              <p className="fest-date">{f.date}</p>
+              <h3>{f.name}</h3>
+              <p>{f.text}</p>
+            </article>
+          ))}
+          <Link to="/about#festivals" className="fest fest-more">
+            <span>Explore Festivals →</span>
           </Link>
-        </p>
-      )}
-    </Section>
+        </div>
+        {/* <div className="rail-btns container">
+          <button onClick={() => go(-1)} aria-label="Previous">
+            ‹
+          </button>
+          <button onClick={() => go(1)} aria-label="Next">
+            ›
+          </button>
+        </div> */}
+      </div>
+    </section>
   );
 }
 

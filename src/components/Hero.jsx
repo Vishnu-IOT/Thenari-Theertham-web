@@ -1,21 +1,70 @@
-import { Link } from 'react-router-dom'
-import { templeData as t } from '../data/templeData.js'
+import { Link } from "react-router-dom";
+import { templeData as t } from "../data/templeData.js";
+import { Embers } from "./ui.jsx";
+
 export default function Hero() {
+  const words = t.name.split(" ") || "new";
+  const scrollNext = (e) => {
+    e.preventDefault();
+    document.getElementById("status")?.scrollIntoView({ behavior: "smooth" });
+  };
   return (
     <section className="hero" aria-labelledby="hero-title">
-      <img className="hero-img" src={t.images.hero} alt="Temple entrance surrounded by greenery in soft light (replace with temple photograph)" />
-      <div className="hero-overlay" />
-      <div className="hero-content">
-        <p className="eyebrow">॥ श्री राम ॥</p>
-        <h1 id="hero-title">{t.name}</h1>
-        <h2>{t.subtitle}</h2>
-        <p>{t.tagline}</p>
-        <div className="btn-row">
-          <Link className="btn btn-gold" to="/temple">Explore the Temple</Link>
-          <Link className="btn btn-ghost" to="/visit">Plan Your Visit</Link>
+      <Embers />
+      <div className="container hero-inner">
+        <div className="hero-copy">
+          <p className="mantra rise" style={{ "--d": ".1s" }}>
+            ॥ ശ്രീ രാമ ॥
+          </p>
+          <h1 id="hero-title" className="hero-title">
+            {words.map((w, i) => (
+              <span className="w" key={w}>
+                <i style={{ "--d": `${0.2 + i * 0.15}s` }}>{w}</i>
+              </span>
+            ))}
+          </h1>
+          <p className="hero-sub rise" style={{ "--d": ".6s" }}>
+            {t.subtitle}
+          </p>
+          <p className="hero-tag rise" style={{ "--d": ".75s" }}>
+            {t.tagline}
+          </p>
+          <div className="btn-row rise" style={{ "--d": ".9s" }}>
+            <Link className="btn btn-gold" to="/about">
+              Discover the temple
+            </Link>
+            <Link className="btn btn-ghost" to="/donation">
+              Make an offering
+            </Link>
+          </div>
+        </div>
+
+        <div className="hero-stage">
+          <span className="hero-halo" aria-hidden="true" />
+          <div className="hero-chakra-wrap" aria-hidden="true">
+            <img
+              className="hero-chakra"
+              src="/images/temple/chakra.webp"
+              alt=""
+            />
+          </div>
+          <img
+            className="hero-deity"
+            src="/images/temple/heritage.webp"
+            width="1000"
+            height="1000"
+            alt="Golden sculpture of Sree Rama holding a bow, with Devi standing beside him"
+          />
         </div>
       </div>
-      <a className="scroll-cue" href="#heritage">Discover the Heritage ↓</a>
+      <a
+        className="scroll-cue"
+        href="#status"
+        onClick={scrollNext}
+        aria-label="Scroll down"
+      >
+        <span />
+      </a>
     </section>
-  )
+  );
 }
