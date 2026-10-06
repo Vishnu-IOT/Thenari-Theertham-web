@@ -33,12 +33,12 @@ export const TemplePage = () => (
     <TempleTimings />
   </>
 );
-export const HistoryPage = () => (
-  <>
-    <PageBanner title="History" sub="Sree Madhyarani Sree Rama Temple" />
-    <HeritageIntro />
-  </>
-);
+// export const HistoryPage = () => (
+//   <>
+//     <PageBanner title="History" sub="Sree Madhyarani Sree Rama Temple" />
+//     <HeritageIntro />
+//   </>
+// );
 export const TheerthamPage = () => (
   <>
     <PageBanner title="Thenari Theertham" />

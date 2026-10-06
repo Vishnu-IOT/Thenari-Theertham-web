@@ -1,36 +1,201 @@
-import { usePageMeta, Reveal } from "../components/Common.jsx";
-import { PageHero } from "../components/Ornaments.jsx";
-import { RotatingChakra } from "../components/RotatingChakra.jsx";
-import { templeData as t } from "../data/templeData.js";
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { templeData as t, deities, waters, surroundings, poojas, festivals } from '../data/templeData.js'
+import { Reveal, PageHero, SectionTitle, Ornament, usePageMeta } from '../components/ui.jsx'
 
-const headings = ["Sthalam", "Ramayana Tradition", "Living Worship"];
+const sections = [
+  { id: 'heritage', label: 'Heritage' },
+  { id: 'deities', label: 'Deities' },
+  { id: 'theertham', label: 'Theertham' },
+  { id: 'seva', label: 'Pooja and Seva' },
+  { id: 'festivals', label: 'Festivals' },
+  { id: 'timings', label: 'Timings' },
+]
+
+/* Sticky in-page navigation that follows the reader */
+function JumpNav() {
+  const [active, setActive] = useState('heritage')
+  useEffect(() => {
+    const els = sections.map((s) => document.getElementById(s.id)).filter(Boolean)
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
+      { rootMargin: '-45% 0px -50% 0px' }
+    )
+    els.forEach((el) => io.observe(el))
+    const top = () => { if (window.scrollY < 200) setActive('heritage') }
+    window.addEventListener('scroll', top, { passive: true })
+    return () => { io.disconnect(); window.removeEventListener('scroll', top) }
+  }, [])
+  return (
+    <nav className="jump" aria-label="On this page">
+      <div className="container jump-inner">
+        {sections.map((s) => (
+          <a key={s.id} href={`#${s.id}`} className={active === s.id ? 'on' : ''}
+            onClick={(e) => { e.preventDefault(); document.getElementById(s.id)?.scrollIntoView({ behavior: 'smooth' }) }}>
+            {s.label}
+          </a>
+        ))}
+      </div>
+    </nav>
+  )
+}
+
+const chapters = [
+  { title: 'The place', text: t.heritage[0] },
+  { title: 'The tradition', text: t.heritage[1] },
+  { title: 'Worship today', text: t.heritage[2] },
+]
+
+function Heritage() {
+  return (
+    <section id="heritage" className="section heritage">
+      <div className="container heritage-grid">
+        {/* <div className="mandala" aria-hidden="true">
+          <div className="mandala-sticky">
+            <img className="mandala-chakra" src="/images/temple/chakra.webp" alt="" loading="lazy" />
+            <img className="mandala-deity" src="/images/temple/heritage.webp" alt="" loading="lazy" />
+          </div>
+        </div> */}
+        <div className="mandala-sticky">
+          <img className="heritage-photo" src="/images/temple/heritage.webp" alt="The temple and theertham in Thenari" loading="lazy" />
+        </div>
+        <div className="chapters">
+          <Reveal><p className="kicker">Our heritage</p></Reveal>
+          <Reveal delay={80}><h2>Where the Ramayana meets the village of Thenari</h2></Reveal>
+          {chapters.map((c, i) => (
+            <Reveal key={c.title} delay={60} className="chapter">
+              <h3>{c.title}</h3>
+              <p className={i === 0 ? 'dropcap' : ''}>{c.text}</p>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Deities() {
+  return (
+    <section id="deities" className="section deities-sec">
+      <div className="container">
+        <SectionTitle kicker="The sanctum" title="Deities of the temple" />
+        <div className="deity-rows">
+          {deities.map((d, i) => (
+            <Reveal key={d.name} variant={i % 2 ? 'right' : 'left'} className="deity-row">
+              <div className="deity-arch small"><span className="script" lang="ml">{d.script}</span></div>
+              <div>
+                <h3>{d.name}</h3>
+                <p>{d.text}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Theertham() {
+  return (
+    <section id="theertham" className="section waters about-waters">
+      <div className="ripples" aria-hidden="true"><i /><i /><i /></div>
+      <div className="container">
+        <div className="about-waters-top">
+          <div>
+            <Reveal><p className="kicker">The sacred waters</p></Reveal>
+            <Reveal delay={80}><h2>{t.name}</h2></Reveal>
+            <Reveal delay={160}><blockquote className="pull light">{t.theertham.quote}</blockquote></Reveal>
+            <Reveal delay={220}><p className="lead">{t.theertham.text}</p></Reveal>
+          </div>
+          <Reveal variant="arch" className="waters-photo">
+            <img src="/images/temple/boat-god.webp" alt="A golden boat adorned with flower garlands on the water" loading="lazy" />
+          </Reveal>
+        </div>
+        <div className="water-cards">
+          {waters.map((w, i) => (
+            <Reveal key={w.title} delay={i * 120} className="water-card">
+              <h3>{w.title}</h3>
+              <p>{w.text}</p>
+            </Reveal>
+          ))}
+        </div>
+        <div className="around">
+          {surroundings.map((s, i) => (
+            <Reveal key={s.title} delay={i * 100} className="around-item">
+              <h4>{s.title}</h4>
+              <p>{s.text}</p>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Seva() {
+  const [open, setOpen] = useState(null)
+  return (
+    <section id="seva" className="section seva">
+      <div className="container seva-wrap">
+        <SectionTitle kicker="Offerings for devotees" title="Pooja and Seva" sub="Tap an offering to see how to arrange it." />
+        <ul className="acc">
+          {poojas.map((p, i) => {
+            const on = open === i
+            return (
+              <Reveal as="li" key={p.name} delay={i * 50} className={`acc-item ${on ? 'on' : ''}`}>
+                <button onClick={() => setOpen(on ? null : i)} aria-expanded={on} aria-controls={`acc-${i}`}>
+                  <span className="acc-name">{p.name}</span>
+                  <span className="acc-time">{p.time}</span>
+                  <span className="acc-plus" aria-hidden="true" />
+                </button>
+                <div className="acc-panel" id={`acc-${i}`} role="region">
+                  <div>
+                    <p>{p.text}</p>
+                    <p className="acc-note">{p.details}</p>
+                  </div>
+                </div>
+              </Reveal>
+            )
+          })}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+function Timings() {
+  return (
+    <section id="timings" className="section timings">
+      <div className="container">
+        <SectionTitle kicker="Darshan" title="Temple timings" />
+        <Reveal className="timing-board">
+          <div><span>Morning</span><strong>{t.timings.morning.label}</strong></div>
+          <Ornament className="vertical" />
+          <div><span>Evening</span><strong>{t.timings.evening.label}</strong></div>
+        </Reveal>
+        <p className="center note">{t.timings.note}</p>
+        <Reveal className="about-cta">
+          <Link className="btn btn-maroon" to="/visit#contact">Plan your visit</Link>
+          <Link className="btn btn-line" to="/donation">Support the temple</Link>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
 
 export default function HistoryPage() {
-  usePageMeta("History | Thenari Theertham", "The sacred history and traditions of Sree Madhyarani Sree Rama Temple, Thenari.");
+  usePageMeta('History | Thenari Theertham', 'The heritage, deities, sacred theertham, offerings and festivals of Thenari Sree Rama Temple, Elappully, Palakkad.')
   return (
-    <div className="page-history">
-      <PageHero theme="theme-ola" mal="സ്ഥല ചരിത്രം" title="Sthala Charitham" sub="The history and tradition of the temple" />
-      <section className="ola-section">
-        <div className="container ola-grid">
-          <Reveal className="ola-side">
-            <div className="rama-medallion">
-              <RotatingChakra />
-              <img src="/images/temple/heritage.png" alt="Golden sculpture of Sree Rama holding a bow" width="600" height="600" />
-            </div>
-            <p className="ola-caption">Sree Rama — the heart of the temple's devotional tradition</p>
-          </Reveal>
-          <div className="ola-leaves">
-            {t.heritage.map((p, i) => (
-              <Reveal key={i} className="ola-leaf">
-                <span className="ola-hole" aria-hidden="true" /><span className="ola-hole r" aria-hidden="true" />
-                <h2>{headings[i]}</h2>
-                <p>{p}</p>
-              </Reveal>
-            ))}
-            <p className="ola-thread" aria-hidden="true" />
-          </div>
-        </div>
-      </section>
-    </div>
-  );
+    <>
+      <PageHero kicker="॥ ശ്രീ രാമ ॥" title="History of the temple" sub={t.subtitle} className="hero-about">
+        <img className="spin-slow" src="/images/temple/chakra.webp" alt="" />
+      </PageHero>
+      <JumpNav />
+      <Heritage />
+      <Deities />
+      <Theertham />
+      <Seva />
+      <Timings />
+    </>
+  )
 }

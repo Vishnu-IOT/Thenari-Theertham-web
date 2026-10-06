@@ -32,7 +32,9 @@ export default function Header() {
           <span className="brand-text"><strong>{t.name}</strong><span>{t.subtitle}</span></span>
         </Link>
         <nav className="desktop-nav" aria-label="Main navigation">
-          {navLinks.map((l) => <NavLink key={l.to} to={l.to} end={l.to === '/'}>{l.label}</NavLink>)}
+          {navLinks.map((l) => <NavLink key={l.to} to={l.to} end={l.to === '/'} className={l.to === '/donation' ? 'nav-donate' : undefined}>
+            <span>{l.label}</span>
+          </NavLink>)}
         </nav>
         <button className={`burger ${open ? 'x' : ''}`} onClick={() => setOpen(!open)} aria-expanded={open} aria-label="Toggle menu"><i /><i /><i /></button>
       </div>

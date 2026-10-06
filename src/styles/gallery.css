@@ -1,0 +1,60 @@
+/* =========================================================
+   GALLERY PAGE — filter pills, masonry grid, lightbox
+   ========================================================= */
+.gl-filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; margin-bottom: clamp(1.8rem, 4vw, 3rem); }
+.gl-filters button {
+  display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.2rem; border-radius: 999px;
+  border: 1.5px solid rgba(110, 20, 35, 0.35); background: transparent; color: var(--maroon);
+  font-weight: 600; transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+.gl-filters button small { font-size: 0.78rem; opacity: 0.7; }
+.gl-filters button:hover { border-color: var(--maroon); }
+.gl-filters button.on { background: var(--maroon); border-color: var(--maroon); color: var(--cream); }
+
+.gl-grid { columns: 3 260px; column-gap: 1rem; }
+.gl-grid li { break-inside: avoid; margin-bottom: 1rem; animation: glIn 0.7s var(--ease) both; animation-delay: calc(var(--i, 0) * 45ms); }
+.gl-grid button {
+  position: relative; display: block; width: 100%; padding: 0; overflow: hidden; border: 1px solid rgba(138, 90, 18, 0.45);
+  border-radius: 12px; background: var(--night-2); box-shadow: 0 10px 26px rgba(63, 11, 21, 0.2);
+}
+.gl-grid img { width: 100%; height: auto; transition: transform 0.9s var(--ease); }
+.gl-grid button:hover img, .gl-grid button:focus-visible img { transform: scale(1.06); }
+.gl-cap {
+  position: absolute; inset: auto 0 0 0; display: grid; gap: 0.1rem; padding: 2.2rem 1rem 0.8rem; text-align: left;
+  color: var(--cream); background: linear-gradient(0deg, rgba(21, 7, 9, 0.88), transparent);
+  opacity: 0; transform: translateY(8px); transition: 0.4s var(--ease);
+}
+.gl-cap b { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; line-height: 1.2; }
+.gl-cap small { color: var(--gold-l); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.gl-grid button:hover .gl-cap, .gl-grid button:focus-visible .gl-cap { opacity: 1; transform: none; }
+@keyframes glIn { from { opacity: 0; transform: translateY(18px) scale(0.97); } to { opacity: 1; transform: none; } }
+
+.gl-lightbox {
+  position: fixed; inset: 0; z-index: 700; display: flex; align-items: center; justify-content: center;
+  padding: 1rem; background: rgba(12, 4, 6, 0.95); animation: pageIn 0.3s;
+}
+.gl-lightbox figure { display: grid; justify-items: center; gap: 0.8rem; max-width: min(92vw, 1000px); animation: glIn 0.4s var(--ease); }
+.gl-lightbox img { max-width: 100%; max-height: 78vh; width: auto; height: auto; object-fit: contain; border: 2px solid var(--gold); border-radius: 8px; }
+.gl-lightbox figcaption { display: grid; gap: 0.15rem; text-align: center; color: var(--cream); }
+.gl-lightbox figcaption b { font-family: var(--serif); font-size: 1.35rem; font-weight: 600; }
+.gl-lightbox figcaption small { color: var(--gold-l); }
+.gl-lb-btn {
+  position: absolute; z-index: 2; display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%;
+  border: 1px solid rgba(241, 212, 137, 0.55); background: rgba(63, 11, 21, 0.7); color: var(--gold-l); font-size: 1.8rem; line-height: 1;
+  transition: background 0.3s, color 0.3s;
+}
+.gl-lb-btn:hover { background: var(--gold); color: #2a1305; }
+.gl-lb-close { top: 1rem; right: 1rem; }
+.gl-lb-prev { left: 1rem; top: 50%; margin-top: -1.5rem; }
+.gl-lb-next { right: 1rem; top: 50%; margin-top: -1.5rem; }
+
+@media (max-width: 700px) {
+  .gl-grid { columns: 2; column-gap: 0.6rem; }
+  .gl-grid li { margin-bottom: 0.6rem; }
+  .gl-cap { opacity: 1; transform: none; padding: 1.4rem 0.6rem 0.5rem; }
+  .gl-cap b { font-size: 0.95rem; }
+  .gl-cap small { display: none; }
+  .gl-lb-prev, .gl-lb-next { top: auto; bottom: 1.2rem; margin-top: 0; }
+  .gl-lightbox img { max-height: 68vh; }
+}
+@media (hover: none) { .gl-cap { opacity: 1; transform: none; } }

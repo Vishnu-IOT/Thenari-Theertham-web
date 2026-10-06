@@ -1,18 +1,7 @@
-import { Link } from "react-router-dom";
 import Hero from "../components/Hero.jsx";
-import Gallery from "../components/Gallery.jsx";
-import { Section, SectionHeading, usePageMeta } from "../components/Common.jsx";
-import {
-  HeritageIntro,
-  TheerthamSection,
-  DeitySection,
-  PoojaSection,
-  TempleTimings,
-  FestivalSection,
-  ArchitectureSection,
-  VisitSection,
-  ContactSection,
-} from "../components/Sections.jsx";
+import HomeFestivals from "../components/HomeFestivals.jsx";
+import { HeritageIntro, TheerthamSection, DeitySection, PoojaSection, Give, Visit } from "../components/HomeSections.jsx";
+import { usePageMeta } from "../components/ui.jsx";
 
 export default function Home() {
   usePageMeta(
@@ -26,20 +15,9 @@ export default function Home() {
       <TheerthamSection />
       <DeitySection />
       <PoojaSection />
-      {/* <TempleTimings /> */}
-      <FestivalSection />
-      {/* <ArchitectureSection /> */}
-      {/* <Section id="gallery-preview">
-        <SectionHeading label="Darshan in pictures" title="Gallery" />
-        <Gallery preview />
-        <p className="center">
-          <Link className="btn btn-maroon" to="/gallery">
-            View Full Gallery →
-          </Link>
-        </p>
-      </Section> */}
-      {/* <VisitSection /> */}
-      <ContactSection />
+      <HomeFestivals />
+      <Give />
+      <Visit />
     </>
   );
 }

@@ -551,7 +551,7 @@ html.ready .hero-stage {
   font-family: var(--serif);
   font-size: 1.6rem;
   color: var(--gold-l);
-  min-height: 240px;
+  /* min-height: 240px; */
 }
 .rail-btns {
   display: flex;

@@ -11,7 +11,7 @@ import {
 import rama from "../../public/images/temple/heritage.png";
 import { RotatingChakra } from "./RotatingChakra.jsx";
 import { useRef } from "react";
-import { SectionTitle } from "./ui.jsx";
+import { Diya, IconPhone, IconPin, SectionTitle } from "./ui.jsx";
 
 const PH = (v) => v || "[Not yet provided]";
 
@@ -182,6 +182,7 @@ export function FestivalSection({ all = false }) {
   const list = festivals.slice(0, 6);
   return (
     <section className="section occasions">
+      <img className="section-rama" src='/images/deity/fill.png' alt="Festivals" />
       <div className="container">
         <SectionTitle
           light
@@ -204,10 +205,10 @@ export function FestivalSection({ all = false }) {
               <p>{f.text}</p>
             </article>
           ))}
-          <Link to="/about#festivals" className="fest fest-more">
-            <span>Explore Festivals →</span>
-          </Link>
         </div>
+        <Link to="/about#festivals" className="fest-more">
+          <span>Explore Festivals →</span>
+        </Link>
         {/* <div className="rail-btns container">
           <button onClick={() => go(-1)} aria-label="Previous">
             ‹
@@ -360,4 +361,46 @@ export function ContactSection() {
       </p>
     </Section>
   );
+}
+
+/* ============ Donation invitation ============ */
+export function Give() {
+  return (
+    <section className="give">
+      <div className="container give-inner">
+        <Reveal variant="zoom" className="give-lamp"><Diya /></Reveal>
+        <div className="give-copy">
+          <Reveal><h2>Offer a lamp, a meal, a prayer</h2></Reveal>
+          <Reveal delay={100}><p>Every offering helps the daily worship, the care of the theertham and the festivals that bring the community together.</p></Reveal>
+          <Reveal delay={200}><Link className="btn btn-maroon" to="/donation">Give to the temple</Link></Reveal>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ============ Visit ============ */
+export function Visit() {
+  return (
+    <section className="section visit">
+      <div className="container visit-grid">
+        <Reveal className="visit-times">
+          <p className="kicker">Darshan</p>
+          <div className="time-block"><span>Morning</span><strong>{t.timings.morning.label}</strong></div>
+          <div className="time-block"><span>Evening</span><strong>{t.timings.evening.label}</strong></div>
+          <p className="note">{t.timings.note}</p>
+        </Reveal>
+        <Reveal delay={150} className="visit-where">
+          <p className="kicker">Find us</p>
+          <h2>Elappully, Palakkad</h2>
+          <p className="icon-line"><IconPin /> <span>{t.contact.address}</span></p>
+          <p className="icon-line"><IconPhone /> <a href={`tel:${t.contact.phone.replace(/\s/g, '')}`}>{t.contact.phone}</a></p>
+          <div className="btn-row">
+            <a className="btn btn-gold" href={t.location.mapUrl} target="_blank" rel="noreferrer">Get directions</a>
+            <Link className="btn btn-ghost" to="/contact">Contact the temple</Link>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  )
 }

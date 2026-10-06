@@ -3,10 +3,10 @@ import { templeData as t } from "../data/templeData.js";
 import { Embers } from "./ui.jsx";
 
 export default function Hero() {
-  const words = t.name.split(" ") || "new";
+  const words = t.name.split(" ");
   const scrollNext = (e) => {
     e.preventDefault();
-    document.getElementById("status")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("heritage")?.scrollIntoView({ behavior: "smooth" });
   };
   return (
     <section className="hero" aria-labelledby="hero-title">
@@ -30,7 +30,7 @@ export default function Hero() {
             {t.tagline}
           </p>
           <div className="btn-row rise" style={{ "--d": ".9s" }}>
-            <Link className="btn btn-gold" to="/about">
+            <Link className="btn btn-gold" to="/history">
               Discover the temple
             </Link>
             <Link className="btn btn-ghost" to="/donation">
@@ -59,7 +59,7 @@ export default function Hero() {
       </div>
       <a
         className="scroll-cue"
-        href="#status"
+        href="#heritage"
         onClick={scrollNext}
         aria-label="Scroll down"
       >

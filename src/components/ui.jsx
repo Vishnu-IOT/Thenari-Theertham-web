@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { templeData as t } from "../data/templeData.js";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 /* ---------- Scroll reveal ---------- */
 export function Reveal({
@@ -40,6 +39,15 @@ export function Reveal({
     >
       {children}
     </Tag>
+  );
+}
+
+/* ---------- Section wrapper ---------- */
+export function Section({ id, className = "", children }) {
+  return (
+    <section id={id} className={`section ${className}`}>
+      <div className="container">{children}</div>
+    </section>
   );
 }
 
@@ -90,6 +98,9 @@ export function Ornament({ className = "" }) {
 }
 
 export function Diya({ className = "" }) {
+  const uid = useId().replace(/:/g, "");
+  const dg = `dg${uid}`;
+  const db = `db${uid}`;
   return (
     <svg
       className={`diya ${className}`}
@@ -97,16 +108,16 @@ export function Diya({ className = "" }) {
       aria-hidden="true"
     >
       <defs>
-        <radialGradient id="dg" cx="50%" cy="40%" r="60%">
+        <radialGradient id={dg} cx="50%" cy="40%" r="60%">
           <stop offset="0" stopColor="#ffd98a" stopOpacity="0.55" />
           <stop offset="1" stopColor="#e8892a" stopOpacity="0" />
         </radialGradient>
-        <linearGradient id="db" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={db} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#f1d489" />
           <stop offset="1" stopColor="#a8741c" />
         </linearGradient>
       </defs>
-      <circle className="diya-glow" cx="60" cy="48" r="46" fill="url(#dg)" />
+      <circle className="diya-glow" cx="60" cy="48" r="46" fill={`url(#${dg})`} />
       <g className="flame">
         <path
           d="M60 18 C70 34 76 42 76 54 C76 64 69 70 60 70 C51 70 44 64 44 54 C44 42 52 34 60 18 Z"
@@ -119,7 +130,7 @@ export function Diya({ className = "" }) {
       </g>
       <path
         d="M18 70 C22 96 44 106 60 106 C76 106 98 96 102 70 C88 78 72 80 60 80 C48 80 32 78 18 70 Z"
-        fill="url(#db)"
+        fill={`url(#${db})`}
       />
       <path
         d="M18 70 C32 78 48 80 60 80 C72 80 88 78 102 70"
@@ -244,54 +255,4 @@ export function usePageMeta(title, desc) {
     const m = document.querySelector('meta[name="description"]');
     if (m && desc) m.setAttribute("content", desc);
   }, [title, desc]);
-}
-
-function istMinutes() {
-  const p = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Asia/Kolkata",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: false,
-  }).formatToParts(new Date());
-  const h = Number(p.find((x) => x.type === "hour").value) % 24;
-  const m = Number(p.find((x) => x.type === "minute").value);
-  return h * 60 + m;
-}
-const fmt = ([h, m]) => {
-  const ap = h >= 12 ? "PM" : "AM";
-  return `${h % 12 || 12}:${String(m).padStart(2, "0")} ${ap}`;
-};
-
-/* Live "is the sannidhi open?" status, computed in Indian Standard Time. */
-export function useTempleStatus() {
-  const [now, setNow] = useState(istMinutes);
-  useEffect(() => {
-    const id = setInterval(() => setNow(istMinutes()), 30000);
-    return () => clearInterval(id);
-  }, []);
-  const windows = [
-    { name: "morning", ...t.timings.morning },
-    { name: "evening", ...t.timings.evening },
-  ].map((w) => ({
-    ...w,
-    s: w.open[0] * 60 + w.open[1],
-    e: w.close[0] * 60 + w.close[1],
-  }));
-
-  const current = windows.find((w) => now >= w.s && now < w.e);
-  if (current)
-    return {
-      open: true,
-      text: `Darshan is open. ${current.name[0].toUpperCase() + current.name.slice(1)} darshan until ${fmt(current.close)}.`,
-    };
-  const next = windows.find((w) => now < w.s);
-  if (next)
-    return {
-      open: false,
-      text: `The sanctum is closed now. ${next.name[0].toUpperCase() + next.name.slice(1)} darshan opens at ${fmt(next.open)}.`,
-    };
-  return {
-    open: false,
-    text: `The sanctum is closed for today. Morning darshan opens at ${fmt(windows[0].open)}.`,
-  };
 }

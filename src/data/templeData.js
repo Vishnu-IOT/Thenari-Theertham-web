@@ -1,9 +1,10 @@
-const img = (seed, w = 1200, h = 800) =>
-  `https://picsum.photos/seed/${seed}/${w}/${h}`;
-
 // =========================================================
 // TEMPLE DATA
 // =========================================================
+
+// Darshan hours. Edit a single day in `weeklyTimings` below if it differs.
+const MORNING = { label: "5:30 AM – 10:30 AM" };
+const EVENING = { label: "5:00 PM – 7:00 PM" };
 
 export const templeData = {
   name: "Thenari Theertham",
@@ -36,17 +37,11 @@ export const templeData = {
   },
 
   // =======================================================
-  // IMAGES — KEEPING ORIGINAL STRUCTURE
+  // IMAGES
   // =======================================================
 
   images: {
-    hero: img("thenari-hero", 1600, 1000),
-
-    heritage: img("thenari-heritage", 1200, 900),
-
-    theertham: img("thenari-theertham", 1200, 900),
-
-    theertham2: img("thenari-theertham-2", 1200, 900),
+    theertham2: "/images/gallery/7.jpg",
   },
 
   // =======================================================
@@ -54,9 +49,9 @@ export const templeData = {
   // =======================================================
 
   timings: {
-    morning: "5:30 AM – 10:30 AM",
+    morning: MORNING,
 
-    evening: "5:00 PM – 7:00 PM",
+    evening: EVENING,
 
     note: "Temple timings may vary on special occasions and festival days. Devotees are advised to confirm the timings before visiting.",
   },
@@ -73,7 +68,10 @@ export const templeData = {
     address:
       "Theertham Paadam, Thenari Road, Elappully, Palakkad, Kerala 678622, India",
 
-    hours: "5:30 AM – 10:30 AM / 5:00 PM – 7:00 PM",
+    hours: `${MORNING.label} / ${EVENING.label}`,
+
+    // Digits only, with country code. Used for the WhatsApp links.
+    whatsapp: "916282253183",
   },
 
   // =======================================================
@@ -84,7 +82,8 @@ export const templeData = {
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Thenari+Theertham+Sree+Madhyarani+Sree+Rama+Temple+Elappully+Palakkad+Kerala",
 
-    embedUrl: "",
+    embedUrl:
+      "https://www.google.com/maps?q=Thenari+Theertham+Sree+Madhyarani+Sree+Rama+Temple+Elappully+Palakkad+Kerala&output=embed",
   },
 
   // =======================================================
@@ -123,6 +122,96 @@ export const templeData = {
     },
   ],
 };
+// =========================================================
+// WEEKLY TIMINGS — Sunday to Saturday
+// =========================================================
+
+export const weeklyTimings = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+].map((day) => ({ day, morning: MORNING.label, evening: EVENING.label }));
+
+// =========================================================
+// THEERTHAM HIGHLIGHTS
+// =========================================================
+
+export const waters = [
+  {
+    title: 'Rama Theertham',
+    text: 'Rama-related traditions form an important part of the religious identity associated with Thenari.',
+  },
+  {
+    title: 'Lakshmana Theertham',
+    text: 'Lakshmana Theertham is mentioned in traditional accounts associated with the sacred landscape around Thenari.',
+  },
+]
+
+export const surroundings = [
+  {
+    title: 'Peaceful rural setting',
+    text: 'The temple is situated within the peaceful rural landscape of Elappully, surrounded by the natural beauty of Palakkad.',
+  },
+  {
+    title: 'Sacred spaces',
+    text: 'The temple and its sacred water source create a devotional environment for worshippers and visitors.',
+  },
+  {
+    title: 'Traditional worship',
+    text: "Daily worship, offerings and special observances continue the temple's living devotional traditions.",
+  },
+]
+
+// =========================================================
+// DONATION — fill these in and the Donation page shows them.
+// Leave a value empty and that option is simply hidden.
+// The website does not process payments; it prepares the
+// offering and hands the devotee to UPI / bank / WhatsApp.
+// =========================================================
+
+export const donation = {
+  upiId: '', // e.g. 'thenaritemple@sbi'
+  payeeName: 'Thenari Theertham Sree Rama Temple',
+  bank: {
+    accountName: '',
+    accountNumber: '',
+    bankName: '',
+    ifsc: '',
+    branch: '',
+  },
+  amounts: [101, 501, 1001, 2501, 5001],
+  purposes: [
+    {
+      id: 'annadhanam',
+      name: 'Annadhanam',
+      text: 'Share a meal with devotees on special occasions and festival days.',
+    },
+    {
+      id: 'pooja',
+      name: 'Daily pooja and offerings',
+      text: 'Support the daily worship and the offerings made at the sanctum.',
+    },
+    {
+      id: 'theertham',
+      name: 'Care of the Theertham',
+      text: 'Help keep the sacred water source in front of the temple clean and cared for.',
+    },
+    {
+      id: 'festivals',
+      name: 'Festival celebrations',
+      text: 'Contribute to Sree Rama Navami, Navarathri, Deepavali and other observances.',
+    },
+    {
+      id: 'upkeep',
+      name: 'Temple upkeep',
+      text: 'General maintenance of the temple and its surroundings.',
+    },
+  ],
+}
 
 // =========================================================
 // NAVIGATION
@@ -135,23 +224,8 @@ export const navLinks = [
   },
 
   {
-    to: "/temple",
-    label: "Temple",
-  },
-
-  {
     to: "/history",
     label: "History",
-  },
-
-  {
-    to: "/theertham",
-    label: "Theertham",
-  },
-
-  {
-    to: "/pooja-seva",
-    label: "Pooja & Seva",
   },
 
   {
@@ -166,12 +240,12 @@ export const navLinks = [
 
   {
     to: "/visit",
-    label: "Visit Us",
+    label: "Visit & Contact",
   },
 
   {
-    to: "/contact",
-    label: "Contact",
+    to: "/donation",
+    label: "Donation",
   },
 ];
 
@@ -183,7 +257,9 @@ export const deities = [
   {
     name: "Sree Rama",
 
-    image: img("sree-rama", 800, 1000),
+    script: "ശ്രീരാമൻ",
+
+    image: "/images/deity/1.jpg",
 
     text: "Sree Rama is the principal deity associated with Thenari Sree Rama Temple and is at the heart of the temple's devotional tradition.",
   },
@@ -191,7 +267,9 @@ export const deities = [
   {
     name: "Sree Sastha",
 
-    image: img("sree-sastha", 800, 1000),
+    script: "ശാസ്താവ്",
+
+    image: "/images/deity/sastha.jpg",
 
     text: "Sree Sastha is one of the deities associated with the temple.",
   },
@@ -199,7 +277,9 @@ export const deities = [
   {
     name: "Lord Anjaneya",
 
-    image: img("lord-anjaneya", 800, 1000),
+    script: "ആഞ്ജനേയൻ",
+
+    image: "/images/deity/ananeya.jpg",
 
     text: "Lord Anjaneya is among the deities associated with the temple and its devotional traditions.",
   },
@@ -285,7 +365,7 @@ export const festivals = [
 
     date: "Date varies annually",
 
-    image: img("sree-rama-navami", 1200, 800),
+    image: "/images/deity/1.jpg",
 
     text: "Sree Rama Navami is an important occasion associated with the worship of Sree Rama.",
   },
@@ -295,7 +375,7 @@ export const festivals = [
 
     date: "Date varies annually",
 
-    image: img("karkidaka-vavu", 1200, 800),
+    image: "/images/gallery/4.jpg",
 
     text: "Karkidaka Vavu is associated with ancestral rites and is an important observance connected with the sacred theertham.",
   },
@@ -305,7 +385,7 @@ export const festivals = [
 
     date: "Date varies annually",
 
-    image: img("hanumath-jayanthi", 1200, 800),
+    image: "/images/deity/ananeya.jpg",
 
     text: "Hanumath Jayanthi is an occasion associated with the worship of Lord Anjaneya.",
   },
@@ -315,7 +395,7 @@ export const festivals = [
 
     date: "Date varies annually",
 
-    image: img("navarathri", 1200, 800),
+    image: "/images/deity/2.jpg",
 
     text: "Navarathri is observed as part of the temple's annual religious calendar.",
   },
@@ -325,7 +405,7 @@ export const festivals = [
 
     date: "Date varies annually",
 
-    image: img("niraputhari", 1200, 800),
+    image: "/images/gallery/1.jpg",
 
     text: "Niraputhari is a traditional agricultural and religious observance associated with Kerala temple traditions.",
   },
@@ -335,7 +415,7 @@ export const festivals = [
 
     date: "Date varies annually",
 
-    image: img("thulavavu-tharpanam", 1200, 800),
+    image: "/images/gallery/10.jpg",
 
     text: "Thulavavu Tharpanam is associated with ancestral remembrance and religious observance.",
   },
@@ -345,7 +425,7 @@ export const festivals = [
 
     date: "Karkidakam",
 
-    image: img("ramayana-parayanam", 1200, 800),
+    image: "/images/gallery/5.jpg",
 
     text: "Ramayana Parayanam during the month of Karkidakam forms part of the devotional tradition associated with Kerala temples.",
   },
@@ -355,7 +435,7 @@ export const festivals = [
 
     date: "Special occasions",
 
-    image: img("annadhanam", 1200, 800),
+    image: "/images/gallery/6.jpg",
 
     text: "Annadhanam is associated with special religious occasions and community participation.",
   },
@@ -365,104 +445,46 @@ export const festivals = [
 
     date: "Date varies annually",
 
-    image: img("deepavali", 1200, 800),
+    image: "/images/deity/3.jpg",
 
     text: "Deepavali is reported among the important occasions associated with the temple.",
   },
 ];
 
 // =========================================================
-// HIGHLIGHTS
+// GALLERY — real photographs from /public/images
+// (w / h are the pixel sizes, so the grid never jumps while loading)
 // =========================================================
 
-export const highlights = [
-  {
-    title: "Thenari Theertham",
+const photo = (src, w, h, category, caption, alt) => ({
+  id: src,
+  src,
+  w,
+  h,
+  category,
+  caption,
+  alt: alt || `${caption}, Thenari Sree Rama Temple`,
+});
 
-    image: img("highlight-theertham", 1000, 750),
-
-    text: "The sacred water source in front of the temple is one of the defining spiritual features of Thenari.",
-  },
-
-  {
-    title: "Temple Surroundings",
-
-    image: img("highlight-surroundings", 1000, 750),
-
-    text: "The temple is situated within the peaceful rural landscape of Elappully, surrounded by the natural beauty of Palakkad.",
-  },
-
-  {
-    title: "Sacred Spaces",
-
-    image: img("highlight-sacred-space", 1000, 750),
-
-    text: "The temple and its sacred water source create a devotional environment for worshippers and visitors.",
-  },
-
-  {
-    title: "Traditional Worship",
-
-    image: img("highlight-worship", 1000, 750),
-
-    text: "Daily worship, offerings and special observances continue the temple's living devotional traditions.",
-  },
-
-  {
-    title: "Rama Theertham",
-
-    image: img("rama-theertham", 1000, 750),
-
-    text: "Rama-related traditions form an important part of the religious identity associated with Thenari.",
-  },
-
-  {
-    title: "Lakshmana Theertham",
-
-    image: img("lakshmana-theertham", 1000, 750),
-
-    text: "Lakshmana Theertham is mentioned in traditional accounts associated with the sacred landscape around Thenari.",
-  },
+export const gallery = [
+  photo("/images/gallery/1.jpg", 447, 447, "Temple", "The temple beside the paddy fields"),
+  photo("/images/gallery/4.jpg", 447, 447, "Theertham", "The golden boat on the theertham"),
+  photo("/images/deity/1.jpg", 701, 1023, "Deity", "Sree Rama in flower garlands"),
+  photo("/images/gallery/2.jpg", 738, 414, "Temple", "Temple entrance and signboard"),
+  photo("/images/temple/gallery/boat-deity.webp", 805, 920, "Theertham", "Deity on the golden boat"),
+  photo("/images/gallery/5.jpg", 387, 516, "Architecture", "Carved wooden temple facade"),
+  photo("/images/deity/sastha.jpg", 640, 480, "Deity", "Sree Sastha"),
+  photo("/images/gallery/7.jpg", 399, 501, "Theertham", "The boat at dusk"),
+  photo("/images/gallery/3.jpg", 738, 408, "Temple", "The path through the greenery"),
+  photo("/images/deity/ananeya.jpg", 736, 981, "Deity", "Lord Anjaneya"),
+  photo("/images/gallery/9.jpg", 522, 383, "Architecture", "Tiled temple roofs"),
+  photo("/images/temple/gallery/boat-garland.webp", 425, 550, "Theertham", "Garlanded boat carving"),
+  photo("/images/gallery/6.jpg", 364, 549, "Architecture", "Traditional Kerala hall"),
+  photo("/images/deity/2.jpg", 736, 981, "Deity", "Deities on the golden seat"),
+  photo("/images/gallery/10.jpg", 516, 387, "Temple", "Shrine and sacred water"),
+  photo("/images/gallery/8.jpg", 415, 739, "Theertham", "The golden boat with the deity"),
+  photo("/images/deity/3.jpg", 454, 675, "Deity", "Deities adorned with garlands"),
+  photo("/images/temple/gallery/boat-carving.webp", 805, 634, "Theertham", "Carving on the boat"),
 ];
 
-// =========================================================
-// GALLERY
-// =========================================================
-
-const cats = [
-  "Temple",
-  "Deity",
-  "Theertham",
-  "Festivals",
-  "Pooja",
-  "Architecture",
-  "Nature",
-];
-
-export const galleryCategories = ["All", ...cats];
-
-export const gallery = cats.flatMap((category, index) => [
-  {
-    id: `${category.toLowerCase()}-1`,
-
-    category,
-
-    src: img(`thenari-gallery-${category.toLowerCase()}-1`, 1200, 800),
-
-    caption: `${category} — Thenari Theertham`,
-
-    alt: `${category} at Thenari Theertham, Sree Madhyarani Sree Rama Temple`,
-  },
-
-  {
-    id: `${category.toLowerCase()}-2`,
-
-    category,
-
-    src: img(`thenari-gallery-${category.toLowerCase()}-2`, 1200, 800),
-
-    caption: `${category} — Sacred Heritage`,
-
-    alt: `Sacred heritage and surroundings of Thenari Sree Rama Temple`,
-  },
-]);
+export const galleryCategories = ["All", "Temple", "Architecture", "Theertham", "Deity"];
