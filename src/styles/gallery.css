@@ -48,7 +48,19 @@
 .gl-lb-prev { left: 1rem; top: 50%; margin-top: -1.5rem; }
 .gl-lb-next { right: 1rem; top: 50%; margin-top: -1.5rem; }
 
+.gl-grid .gl-vthumb { aspect-ratio: 4 / 3; object-fit: cover; }
+.gl-play {
+  position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 3.4rem; height: 3.4rem;
+  margin: -1.7rem 0 0 -1.7rem; border-radius: 50%; background: var(--gold); color: #2a1305;
+  box-shadow: 0 0 0 6px rgba(212, 162, 58, 0.3); transition: transform 0.3s;
+}
+.gl-play svg { width: 46%; fill: currentColor; margin-left: 6%; }
+.gl-grid button:hover .gl-play { transform: scale(1.1); }
+.gl-video { width: min(92vw, 960px); aspect-ratio: 16 / 9; border: 2px solid var(--gold); border-radius: 8px; overflow: hidden; background: #000; }
+.gl-video iframe { width: 100%; height: 100%; border: 0; display: block; }
+
 @media (max-width: 700px) {
+  .gl-play { width: 2.6rem; height: 2.6rem; margin: -1.3rem 0 0 -1.3rem; }
   .gl-grid { columns: 2; column-gap: 0.6rem; }
   .gl-grid li { margin-bottom: 0.6rem; }
   .gl-cap { opacity: 1; transform: none; padding: 1.4rem 0.6rem 0.5rem; }

@@ -42,6 +42,10 @@ export function Reveal({
   );
 }
 
+/* Today's weekday in India, e.g. "Tuesday" (used to highlight today's timings) */
+export const istWeekday = () =>
+  new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Kolkata", weekday: "long" }).format(new Date());
+
 /* ---------- Section wrapper ---------- */
 export function Section({ id, className = "", children }) {
   return (

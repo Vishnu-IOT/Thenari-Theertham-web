@@ -5,11 +5,13 @@
   --line: #d6c298;
   --brass-l: #d8b765;
   --deep: #5a1420;
-  --kasavu: linear-gradient(var(--brass) 0 1.5px,
-      transparent 1.5px 4px,
-      var(--maroon) 4px 6px,
-      transparent 6px 8.5px,
-      var(--brass) 8.5px 10px);
+  --kasavu: linear-gradient(
+    var(--brass) 0 1.5px,
+    transparent 1.5px 4px,
+    var(--maroon) 4px 6px,
+    transparent 6px 8.5px,
+    var(--brass) 8.5px 10px
+  );
   --stone: url(https://picsum.photos/seed/temple-stone/1600/900);
   /* replace with /images/temple/texture.jpg */
   --hh: 100px;
@@ -145,12 +147,12 @@ p {
   text-align: left;
 }
 
-.timings+.center,
-.section>.container>p.center {
+.timings + .center,
+.section > .container > p.center {
   text-align: left;
 }
 
-.heritage .divider+p {
+.heritage .divider + p {
   font: 500 1.4rem/1.65 var(--serif);
   color: var(--maroon-d);
 }
@@ -301,7 +303,7 @@ p {
 }
 
 .drawer::before {
-  content: "॥ श्री राम ॥";
+  content: "॥ ശ്രീറാം ॥";
   position: absolute;
   top: 0;
   left: 0;
@@ -348,11 +350,13 @@ p {
   align-items: center;
   overflow: hidden;
   color: var(--cream);
-  padding: calc(var(--hh) + 1.5rem) 0 5rem;
-  background: radial-gradient(70% 70% at 72% 42%,
-      #6a1526 0,
-      #331019 48%,
-      var(--night) 82%);
+  /* padding: calc(var(--hh) + 1.5rem) 0 5rem; */
+  background: radial-gradient(
+    70% 70% at 72% 42%,
+    #6a1526 0,
+    #331019 48%,
+    var(--night) 82%
+  );
 }
 
 .hero-inner {
@@ -429,10 +433,12 @@ html.ready .hero-stage {
   position: absolute;
   inset: -18%;
   border-radius: 50%;
-  background: radial-gradient(circle,
-      rgba(255, 190, 90, 0.38) 0,
-      rgba(232, 137, 42, 0.12) 40%,
-      transparent 68%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 190, 90, 0.38) 0,
+    rgba(232, 137, 42, 0.12) 40%,
+    transparent 68%
+  );
   animation: glow 6s ease-in-out infinite;
 }
 
@@ -465,7 +471,6 @@ html.ready .hero-stage {
 }
 
 @keyframes float {
-
   0%,
   100% {
     translate: 0 0;
@@ -520,6 +525,7 @@ html.ready .hero-stage {
   .hero {
     align-items: start;
     padding-bottom: 6rem;
+    padding-top: 4rem;
   }
 
   .hero-inner {
@@ -558,8 +564,10 @@ html.ready .hero-stage {
   width: 600px;
   height: 600px;
   border-radius: 50%;
-  background: repeating-conic-gradient(rgba(176, 141, 60, 0.14) 0 3deg,
-      transparent 3deg 12deg);
+  background: repeating-conic-gradient(
+    rgba(176, 141, 60, 0.14) 0 3deg,
+    transparent 3deg 12deg
+  );
   -webkit-mask-image: radial-gradient(circle, #000 25%, transparent 68%);
   mask-image: radial-gradient(circle, #000 25%, transparent 68%);
 }
@@ -574,7 +582,7 @@ html.ready .hero-stage {
   gap: clamp(2.5rem, 7vw, 6rem);
 }
 
-.heritage .split>.reveal:last-child {
+.heritage .split > .reveal:last-child {
   padding-top: clamp(0rem, 6vw, 5rem);
 }
 
@@ -635,7 +643,8 @@ html.ready .hero-stage {
   z-index: 0;
   pointer-events: none;
   animation: chakraRotate 45s linear infinite;
-  filter: drop-shadow(0 0 12px rgba(170, 110, 30, 0.25)) drop-shadow(0 0 30px rgba(170, 110, 30, 0.12));
+  filter: drop-shadow(0 0 12px rgba(170, 110, 30, 0.25))
+    drop-shadow(0 0 30px rgba(170, 110, 30, 0.12));
 }
 
 @keyframes chakraRotate {
@@ -667,16 +676,22 @@ html.ready .hero-stage {
 
 .theertham::before {
   top: -1px;
-  background: radial-gradient(circle at 50% 0,
+  background: radial-gradient(
+      circle at 50% 0,
       var(--cream) 0 13px,
-      transparent 14px) 0 0/28px 14px repeat-x;
+      transparent 14px
+    )
+    0 0/28px 14px repeat-x;
 }
 
 .theertham::after {
   bottom: -1px;
-  background: radial-gradient(circle at 50% 100%,
+  background: radial-gradient(
+      circle at 50% 100%,
       var(--cream) 0 13px,
-      transparent 14px) 0 0/28px 14px repeat-x;
+      transparent 14px
+    )
+    0 0/28px 14px repeat-x;
 }
 
 .theertham .container {
@@ -772,7 +787,7 @@ html.ready .hero-stage {
   margin-top: 0.3rem;
 }
 
-.deity-list>.deity-card:first-child {
+.deity-list > .deity-card:first-child {
   grid-column: 1/-1;
   display: grid;
   grid-template-columns: 5fr 6fr;
@@ -781,34 +796,34 @@ html.ready .hero-stage {
   text-align: left;
 }
 
-.deity-list>.deity-card:first-child .img-wrap {
+.deity-list > .deity-card:first-child .img-wrap {
   grid-row: 1 / span 2;
   max-width: 430px;
   border-radius: 999px 999px 0 0;
   margin: 0;
 }
 
-.deity-list>.deity-card:first-child .img-wrap img {
+.deity-list > .deity-card:first-child .img-wrap img {
   border-radius: 999px 999px 0 0;
   aspect-ratio: 3/4;
 }
 
-.deity-list>.deity-card:first-child h3 {
+.deity-list > .deity-card:first-child h3 {
   font-size: clamp(2.2rem, 4.5vw, 3.4rem);
   align-self: end;
 }
 
-.deity-list>.deity-card:first-child p {
+.deity-list > .deity-card:first-child p {
   align-self: start;
   font: 500 1.3rem/1.6 var(--serif);
 }
 
-.deity-list>.deity-card:nth-child(2) {
+.deity-list > .deity-card:nth-child(2) {
   grid-column: 2/7;
   text-align: left;
 }
 
-.deity-list>.deity-card:nth-child(3) {
+.deity-list > .deity-card:nth-child(3) {
   grid-column: 8/13;
   margin-top: 4.5rem;
   text-align: left;
@@ -851,7 +866,7 @@ html.ready .hero-stage {
   color: var(--red);
 }
 
-.pooja-card>p:not(.time) {
+.pooja-card > p:not(.time) {
   grid-column: 1;
   grid-row: 2;
   margin-top: 0.3rem;
@@ -928,14 +943,16 @@ html.ready .hero-stage {
   background: linear-gradient(160deg, #2f0d14, #1e090d);
   border: 1px solid rgba(212, 162, 58, 0.35);
   color: rgba(251, 243, 225, 0.85);
-  clip-path: polygon(var(--n) 0,
-      calc(100% - var(--n)) 0,
-      100% var(--n),
-      100% calc(100% - var(--n)),
-      calc(100% - var(--n)) 100%,
-      var(--n) 100%,
-      0 calc(100% - var(--n)),
-      0 var(--n));
+  clip-path: polygon(
+    var(--n) 0,
+    calc(100% - var(--n)) 0,
+    100% var(--n),
+    100% calc(100% - var(--n)),
+    calc(100% - var(--n)) 100%,
+    var(--n) 100%,
+    0 calc(100% - var(--n)),
+    0 var(--n)
+  );
   transition:
     transform 0.5s var(--ease),
     background 0.5s;
@@ -1022,6 +1039,7 @@ html.ready .hero-stage {
   .rail {
     grid-template-columns: 1fr;
   }
+
 }
 
 /* timings with faint photographic depth */
@@ -1049,7 +1067,7 @@ html.ready .hero-stage {
 
 .timings {
   margin: 0;
-  max-width: 760px;
+  /* max-width: 760px; */
   border: 1px solid var(--brass);
   outline: 1px solid var(--line);
   outline-offset: 7px;
@@ -1071,7 +1089,7 @@ html.ready .hero-stage {
   display: none;
 }
 
-.timings>div:not(.sep) {
+.timings > div:not(.sep) {
   flex: 1;
 }
 
@@ -1275,8 +1293,10 @@ html.ready .hero-stage {
   height: 640px;
   translate: -50%;
   border-radius: 50%;
-  background: repeating-conic-gradient(rgba(176, 141, 60, 0.13) 0 3deg,
-      transparent 3deg 10deg);
+  background: repeating-conic-gradient(
+    rgba(176, 141, 60, 0.13) 0 3deg,
+    transparent 3deg 10deg
+  );
   -webkit-mask-image: radial-gradient(circle, #000 20%, transparent 68%);
   mask-image: radial-gradient(circle, #000 20%, transparent 68%);
   pointer-events: none;
@@ -1364,28 +1384,27 @@ html.ready .hero-stage {
 
 /* responsive */
 @media (max-width: 900px) {
-
   .deity-list,
   .fest-grid {
     grid-template-columns: 1fr;
   }
 
-  .deity-list>.deity-card:first-child {
+  .deity-list > .deity-card:first-child {
     grid-template-columns: 1fr;
     row-gap: 1rem;
   }
 
-  .deity-list>.deity-card:first-child .img-wrap {
+  .deity-list > .deity-card:first-child .img-wrap {
     grid-row: auto;
     margin: 0 auto 1rem;
   }
 
-  .deity-list>.deity-card:nth-child(n + 2) {
+  .deity-list > .deity-card:nth-child(n + 2) {
     grid-column: 1;
     margin-top: 0;
   }
 
-  .fest-grid>.reveal:first-child {
+  .fest-grid > .reveal:first-child {
     grid-row: auto;
   }
 
@@ -1394,7 +1413,7 @@ html.ready .hero-stage {
     grid-template-columns: 1fr;
   }
 
-  .heritage .split>.reveal:last-child {
+  .heritage .split > .reveal:last-child {
     padding-top: 0;
   }
 }
@@ -1467,14 +1486,14 @@ html.ready .hero-stage {
   }
 
   .pooja-card .time,
-  .pooja-card>p:not(.time),
+  .pooja-card > p:not(.time),
   .pooja-card .link-btn {
     grid-column: 1;
     grid-row: auto;
     justify-self: start;
   }
 
-  .fest-grid>.reveal:not(:first-child) .festival-card {
+  .fest-grid > .reveal:not(:first-child) .festival-card {
     grid-template-columns: 96px 1fr;
     gap: 1rem;
   }
@@ -1522,6 +1541,11 @@ html.ready .hero-stage {
     width: 42px;
     height: 42px;
   }
+
+  .heritage::before {
+    left: 120px;
+    top: -60px;
+  }
 }
 
 /* ===== Heritage visual: statue + rotating chakra (alignment fix) =====
@@ -1532,7 +1556,7 @@ html.ready .hero-stage {
   align-items: center;
 }
 
-.heritage .split>.reveal:last-child {
+.heritage .split > .reveal:last-child {
   padding-top: 0;
 }
 

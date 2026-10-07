@@ -1,10 +1,16 @@
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
+import { LanguageProvider } from './i18n/LanguageContext.jsx'
 import './styles/app.css'
 import './styles/preloader.css'
+import './styles/marquee.css'
+import './styles/hero.css'
+import './styles/history.css'
 import './styles/footer.css'
 import './styles/festivals.css'
 import './styles/gallery.css'
 import './styles/visit.css'
-createRoot(document.getElementById('root')).render(<BrowserRouter><App /></BrowserRouter>)
+import './styles/deities.css'
+import './styles/lang.css'
+createRoot(document.getElementById('root')).render(<LanguageProvider><BrowserRouter><App /></BrowserRouter></LanguageProvider>)

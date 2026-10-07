@@ -11,6 +11,7 @@ import GalleryPage from "./pages/GalleryPage.jsx";
 import VisitContactPage from "./pages/VisitContactPage.jsx";
 import Donation from "./pages/Donation.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import { useLang } from "./i18n/LanguageContext.jsx";
 
 /* Scroll to top on page change, or to the #anchor when the link has one. */
 function ScrollToTop() {
@@ -28,11 +29,12 @@ function ScrollToTop() {
 
 export default function App() {
   const { pathname } = useLocation();
+  const { tx } = useLang();
   return (
     <>
       <Preloader />
       <ScrollProgress />
-      <a className="skip-link" href="#main">Skip to content</a>
+      <a className="skip-link" href="#main">{tx("skip")}</a>
       <Header />
       <ScrollToTop />
       <main id="main" className="page" key={pathname}>

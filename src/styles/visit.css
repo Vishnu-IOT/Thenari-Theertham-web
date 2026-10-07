@@ -13,7 +13,7 @@
 .vc-card p { margin-inline: auto; overflow-wrap: anywhere; }
 .vc-card a { text-decoration-color: var(--gold); text-underline-offset: 4px; }
 
-.vc-week { max-width: 760px; margin: clamp(2.5rem, 6vw, 4rem) auto; }
+.vc-week { max-width: 760px; margin: clamp(1.8rem, 4vw, 2.8rem) auto; }
 .vc-week h3 { text-align: center; margin-bottom: 1rem; }
 .vc-week table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; background: #fffaf0; box-shadow: 0 10px 26px rgba(63, 11, 21, 0.1); }
 .vc-week th, .vc-week td { padding: 0.7rem 1rem; text-align: left; border-bottom: 1px solid rgba(138, 90, 18, 0.22); }
@@ -53,4 +53,15 @@
 @media (max-width: 480px) {
   .vc-week th, .vc-week td { padding: 0.55rem 0.55rem; font-size: 0.9rem; }
   .vc-week tbody th, .vc-week thead th { font-size: 1rem; }
+}
+
+/* Extra mobile polish */
+@media (max-width: 640px) {
+  .vc-cards { grid-template-columns: 1fr; }
+  .vc-map { min-height: 260px; }
+  .vc-map-btn { width: calc(100% - 2rem); text-align: center; white-space: normal; }
+  .vc-tabs button { flex: 1 1 auto; text-align: center; }
+  .vc-week { overflow-x: auto; }
+  .vc-form input, .vc-form textarea { font-size: 16px; }
+  .vc-form .btn { width: 100%; }
 }

@@ -1,8 +1,82 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { templeData as t } from "../data/templeData.js";
+import { useData } from "../data/useData.js";
+import { useLang } from "../i18n/LanguageContext.jsx";
 import { Embers } from "./ui.jsx";
 
+/* Framed card: tag chip, photo with caption overlay, progress bars + arrows */
+function DeitySlides() {
+  const { heroSlides: slides } = useData();
+  const { tx } = useLang();
+  const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const go = (d) => setI((n) => (n + d + slides.length) % slides.length);
+  useEffect(() => {
+    const calm = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (paused || calm) return undefined;
+    const id = setInterval(() => setI((n) => (n + 1) % slides.length), 5000);
+    return () => clearInterval(id);
+  }, [paused, i]);
+  const cur = slides[i];
+
+  return (
+    <div
+      className="hero-card"
+      role="group"
+      aria-roledescription="carousel"
+      aria-label={tx("hero.aria")}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
+      <span className="hc-chip">
+        <i aria-hidden="true" />
+        {tx("hero.chip")}
+      </span>
+
+      <div className="hc-photo">
+        {slides.map((s, n) => (
+          <img
+            key={s.src}
+            className={n === i ? "on" : ""}
+            src={s.src}
+            alt={n === i ? s.alt : ""}
+            aria-hidden={n !== i}
+            width="700"
+            height="930"
+            loading={n === 0 ? "eager" : "lazy"}
+            decoding="async"
+          />
+        ))}
+        {/* <div className="hc-info" key={i} aria-live="polite">
+          <p className="hc-kicker">{cur.kicker}</p>
+          <h3>{cur.name}</h3>
+          <p className="hc-text">{cur.text}</p>
+          <Link className="hc-link" to="/history#deities">
+            View the deities <span aria-hidden="true">→</span>
+          </Link>
+        </div> */}
+      </div>
+
+      <div className="hc-foot">
+        <div className="hc-bars">
+          {slides.map((s, n) => (
+            <button key={s.src} className={n === i ? "on" : ""} onClick={() => setI(n)} aria-label={tx("hero.show", { name: s.name })} aria-current={n === i} />
+          ))}
+        </div>
+        <div className="hc-arrows">
+          <button type="button" onClick={() => go(-1)} aria-label={tx("hero.prev")}>‹</button>
+          <button type="button" onClick={() => go(1)} aria-label={tx("hero.next")}>›</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Hero() {
+  const { t } = useData();
+  const { tx } = useLang();
   const words = t.name.split(" ");
   const scrollNext = (e) => {
     e.preventDefault();
@@ -10,16 +84,18 @@ export default function Hero() {
   };
   return (
     <section className="hero" aria-labelledby="hero-title">
+      <img className="hero-bg" src="/images/temple/hero-bg.png" alt="" aria-hidden="true" fetchpriority="high" decoding="async" />
+      <span className="hero-veil" aria-hidden="true" />
       <Embers />
       <div className="container hero-inner">
         <div className="hero-copy">
           <p className="mantra rise" style={{ "--d": ".1s" }}>
-            ॥ ശ്രീ രാമ ॥
+            {tx("common.ayodhyaMantra")}
           </p>
           <h1 id="hero-title" className="hero-title">
-            {words.map((w, i) => (
+            {words.map((w, n) => (
               <span className="w" key={w}>
-                <i style={{ "--d": `${0.2 + i * 0.15}s` }}>{w}</i>
+                <i style={{ "--d": `${0.2 + n * 0.15}s` }}>{w}</i>
               </span>
             ))}
           </h1>
@@ -31,38 +107,20 @@ export default function Hero() {
           </p>
           <div className="btn-row rise" style={{ "--d": ".9s" }}>
             <Link className="btn btn-gold" to="/history">
-              Discover the temple
+              {tx("hero.discover")}
             </Link>
             <Link className="btn btn-ghost" to="/donation">
-              Make an offering
+              {tx("hero.offer")}
             </Link>
           </div>
         </div>
 
         <div className="hero-stage">
           <span className="hero-halo" aria-hidden="true" />
-          <div className="hero-chakra-wrap" aria-hidden="true">
-            <img
-              className="hero-chakra"
-              src="/images/temple/chakra.webp"
-              alt=""
-            />
-          </div>
-          <img
-            className="hero-deity"
-            src="/images/temple/heritage.webp"
-            width="1000"
-            height="1000"
-            alt="Golden sculpture of Sree Rama holding a bow, with Devi standing beside him"
-          />
+          <DeitySlides />
         </div>
       </div>
-      <a
-        className="scroll-cue"
-        href="#heritage"
-        onClick={scrollNext}
-        aria-label="Scroll down"
-      >
+      <a className="scroll-cue" href="#heritage" onClick={scrollNext} aria-label={tx("hero.scroll")}>
         <span />
       </a>
     </section>

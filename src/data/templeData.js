@@ -142,29 +142,29 @@ export const weeklyTimings = [
 
 export const waters = [
   {
-    title: 'Rama Theertham',
-    text: 'Rama-related traditions form an important part of the religious identity associated with Thenari.',
+    title: "Rama Theertham",
+    text: "Rama-related traditions form an important part of the religious identity associated with Thenari.",
   },
   {
-    title: 'Lakshmana Theertham',
-    text: 'Lakshmana Theertham is mentioned in traditional accounts associated with the sacred landscape around Thenari.',
+    title: "Lakshmana Theertham",
+    text: "Lakshmana Theertham is mentioned in traditional accounts associated with the sacred landscape around Thenari.",
   },
-]
+];
 
 export const surroundings = [
   {
-    title: 'Peaceful rural setting',
-    text: 'The temple is situated within the peaceful rural landscape of Elappully, surrounded by the natural beauty of Palakkad.',
+    title: "Peaceful rural setting",
+    text: "The temple is situated within the peaceful rural landscape of Elappully, surrounded by the natural beauty of Palakkad.",
   },
   {
-    title: 'Sacred spaces',
-    text: 'The temple and its sacred water source create a devotional environment for worshippers and visitors.',
+    title: "Sacred spaces",
+    text: "The temple and its sacred water source create a devotional environment for worshippers and visitors.",
   },
   {
-    title: 'Traditional worship',
+    title: "Traditional worship",
     text: "Daily worship, offerings and special observances continue the temple's living devotional traditions.",
   },
-]
+];
 
 // =========================================================
 // DONATION — fill these in and the Donation page shows them.
@@ -174,44 +174,44 @@ export const surroundings = [
 // =========================================================
 
 export const donation = {
-  upiId: '', // e.g. 'thenaritemple@sbi'
-  payeeName: 'Thenari Theertham Sree Rama Temple',
+  upiId: "", // e.g. 'thenaritemple@sbi'
+  payeeName: "Thenari Theertham Sree Rama Temple",
   bank: {
-    accountName: '',
-    accountNumber: '',
-    bankName: '',
-    ifsc: '',
-    branch: '',
+    accountName: "",
+    accountNumber: "",
+    bankName: "",
+    ifsc: "",
+    branch: "",
   },
   amounts: [101, 501, 1001, 2501, 5001],
   purposes: [
     {
-      id: 'annadhanam',
-      name: 'Annadhanam',
-      text: 'Share a meal with devotees on special occasions and festival days.',
+      id: "annadhanam",
+      name: "Annadhanam",
+      text: "Share a meal with devotees on special occasions and festival days.",
     },
     {
-      id: 'pooja',
-      name: 'Daily pooja and offerings',
-      text: 'Support the daily worship and the offerings made at the sanctum.',
+      id: "pooja",
+      name: "Daily pooja and offerings",
+      text: "Support the daily worship and the offerings made at the sanctum.",
     },
     {
-      id: 'theertham',
-      name: 'Care of the Theertham',
-      text: 'Help keep the sacred water source in front of the temple clean and cared for.',
+      id: "theertham",
+      name: "Care of the Theertham",
+      text: "Help keep the sacred water source in front of the temple clean and cared for.",
     },
     {
-      id: 'festivals',
-      name: 'Festival celebrations',
-      text: 'Contribute to Sree Rama Navami, Navarathri, Deepavali and other observances.',
+      id: "festivals",
+      name: "Festival celebrations",
+      text: "Contribute to Sree Rama Navami, Navarathri, Deepavali and other observances.",
     },
     {
-      id: 'upkeep',
-      name: 'Temple upkeep',
-      text: 'General maintenance of the temple and its surroundings.',
+      id: "upkeep",
+      name: "Temple upkeep",
+      text: "General maintenance of the temple and its surroundings.",
     },
   ],
-}
+};
 
 // =========================================================
 // NAVIGATION
@@ -240,7 +240,7 @@ export const navLinks = [
 
   {
     to: "/visit",
-    label: "Visit & Contact",
+    label: "Reach Us",
   },
 
   {
@@ -255,19 +255,9 @@ export const navLinks = [
 
 export const deities = [
   {
-    name: "Sree Rama",
+    id: "sastha",
 
-    script: "ശ്രീരാമൻ",
-
-    image: "/images/deity/1.jpg",
-
-    text: "Sree Rama is the principal deity associated with Thenari Sree Rama Temple and is at the heart of the temple's devotional tradition.",
-  },
-
-  {
     name: "Sree Sastha",
-
-    script: "ശാസ്താവ്",
 
     image: "/images/deity/sastha.jpg",
 
@@ -275,13 +265,82 @@ export const deities = [
   },
 
   {
-    name: "Lord Anjaneya",
+    id: "rama",
 
-    script: "ആഞ്ജനേയൻ",
+    name: "Sree Rama",
+
+    image: "/images/deity/1.jpg",
+
+    text: "Sree Rama is the principal deity associated with Thenari Sree Rama Temple and is at the heart of the temple's devotional tradition.",
+  },
+
+  {
+    id: "anjaneya",
+
+    name: "Lord Anjaneya",
 
     image: "/images/deity/ananeya.jpg",
 
     text: "Lord Anjaneya is among the deities associated with the temple and its devotional traditions.",
+  },
+];
+
+export const homeDeities = [
+  {
+    id: "rama",
+
+    name: "Sree Rama",
+
+    image: "/images/deity/1.jpg",
+
+    text: "Sree Rama is the principal deity associated with Thenari Sree Rama Temple and is at the heart of the temple's devotional tradition.",
+  },
+  {
+    id: "sastha",
+
+    name: "Sree Sastha",
+
+    image: "/images/deity/sastha.jpg",
+
+    text: "Sree Sastha is one of the deities associated with the temple.",
+  },
+
+  {
+    id: "anjaneya",
+
+    name: "Lord Anjaneya",
+
+    image: "/images/deity/ananeya.jpg",
+
+    text: "Lord Anjaneya is among the deities associated with the temple and its devotional traditions.",
+  },
+];
+
+// =========================================================
+// HOME HERO SLIDES (text is translated in templeData.ml.js)
+// =========================================================
+
+export const heroSlides = [
+  {
+    src: "/images/deity/1.jpg",
+    kicker: "Principal deity",
+    name: "Sree Rama",
+    text: "Sree Rama, the principal deity of the temple, adorned with flower garlands.",
+    alt: "Sree Rama adorned with flower garlands",
+  },
+  {
+    src: "/images/deity/2.jpg",
+    kicker: "The sanctum",
+    name: "The deities on the golden seat",
+    text: "The deities of the temple seated in the sacred sanctum.",
+    alt: "The deities on the golden seat",
+  },
+  {
+    src: "/images/deity/3.jpg",
+    kicker: "Alankaram",
+    name: "Adorned with garlands",
+    text: "The deities dressed in garlands and ornaments for darshan.",
+    alt: "The deities adorned with garlands",
   },
 ];
 
@@ -467,24 +526,138 @@ const photo = (src, w, h, category, caption, alt) => ({
 });
 
 export const gallery = [
-  photo("/images/gallery/1.jpg", 447, 447, "Temple", "The temple beside the paddy fields"),
-  photo("/images/gallery/4.jpg", 447, 447, "Theertham", "The golden boat on the theertham"),
-  photo("/images/deity/1.jpg", 701, 1023, "Deity", "Sree Rama in flower garlands"),
-  photo("/images/gallery/2.jpg", 738, 414, "Temple", "Temple entrance and signboard"),
-  photo("/images/temple/gallery/boat-deity.webp", 805, 920, "Theertham", "Deity on the golden boat"),
-  photo("/images/gallery/5.jpg", 387, 516, "Architecture", "Carved wooden temple facade"),
+  photo(
+    "/images/gallery/1.jpg",
+    447,
+    447,
+    "Temple",
+    "The temple beside the paddy fields",
+  ),
+  photo(
+    "/images/gallery/4.jpg",
+    447,
+    447,
+    "Theertham",
+    "The golden boat on the theertham",
+  ),
+  photo(
+    "/images/deity/1.jpg",
+    701,
+    1023,
+    "Deity",
+    "Sree Rama in flower garlands",
+  ),
+  photo(
+    "/images/gallery/2.jpg",
+    738,
+    414,
+    "Temple",
+    "Temple entrance and signboard",
+  ),
+  photo(
+    "/images/temple/gallery/boat-deity.webp",
+    805,
+    920,
+    "Theertham",
+    "Deity on the golden boat",
+  ),
+  photo(
+    "/images/gallery/5.jpg",
+    387,
+    516,
+    "Architecture",
+    "Carved wooden temple facade",
+  ),
   photo("/images/deity/sastha.jpg", 640, 480, "Deity", "Sree Sastha"),
   photo("/images/gallery/7.jpg", 399, 501, "Theertham", "The boat at dusk"),
-  photo("/images/gallery/3.jpg", 738, 408, "Temple", "The path through the greenery"),
+  photo(
+    "/images/gallery/3.jpg",
+    738,
+    408,
+    "Temple",
+    "The path through the greenery",
+  ),
   photo("/images/deity/ananeya.jpg", 736, 981, "Deity", "Lord Anjaneya"),
-  photo("/images/gallery/9.jpg", 522, 383, "Architecture", "Tiled temple roofs"),
-  photo("/images/temple/gallery/boat-garland.webp", 425, 550, "Theertham", "Garlanded boat carving"),
-  photo("/images/gallery/6.jpg", 364, 549, "Architecture", "Traditional Kerala hall"),
+  photo(
+    "/images/gallery/9.jpg",
+    522,
+    383,
+    "Architecture",
+    "Tiled temple roofs",
+  ),
+  photo(
+    "/images/temple/gallery/boat-garland.webp",
+    425,
+    550,
+    "Theertham",
+    "Garlanded boat carving",
+  ),
+  photo(
+    "/images/gallery/6.jpg",
+    364,
+    549,
+    "Architecture",
+    "Traditional Kerala hall",
+  ),
   photo("/images/deity/2.jpg", 736, 981, "Deity", "Deities on the golden seat"),
-  photo("/images/gallery/10.jpg", 516, 387, "Temple", "Shrine and sacred water"),
-  photo("/images/gallery/8.jpg", 415, 739, "Theertham", "The golden boat with the deity"),
-  photo("/images/deity/3.jpg", 454, 675, "Deity", "Deities adorned with garlands"),
-  photo("/images/temple/gallery/boat-carving.webp", 805, 634, "Theertham", "Carving on the boat"),
+  photo(
+    "/images/gallery/10.jpg",
+    516,
+    387,
+    "Temple",
+    "Shrine and sacred water",
+  ),
+  photo(
+    "/images/gallery/8.jpg",
+    415,
+    739,
+    "Theertham",
+    "The golden boat with the deity",
+  ),
+  photo(
+    "/images/deity/3.jpg",
+    454,
+    675,
+    "Deity",
+    "Deities adorned with garlands",
+  ),
+  photo(
+    "/images/temple/gallery/boat-carving.webp",
+    805,
+    634,
+    "Theertham",
+    "Carving on the boat",
+  ),
 ];
 
-export const galleryCategories = ["All", "Temple", "Architecture", "Theertham", "Deity"];
+export const galleryCategories = [
+  "All",
+  "Temple",
+  "Architecture",
+  "Theertham",
+  "Deity",
+];
+
+/* Videos shown on the History page (3 or 4 recommended).
+   Paste the exact YouTube URL of each video, any format works:
+   https://www.youtube.com/watch?v=XXXX | https://youtu.be/XXXX | .../shorts/XXXX
+   Leave the list empty and the video section is hidden. */
+export const templeVideos = [
+  { url: "https://youtu.be/x38O59Sz10I?si=nIAZbx46kGxx59Xs", title: "Thenari Theertham, Sree Madhyarani Sree Rama Temple|Palakkad|Kerala" },
+  { url: "https://youtu.be/cd9fs-mJs9Q?si=xMQmRdVKL8ptCWrA", title: "தேனாரி இராமர் கோவில் || Elapully || chitoor || thenari || palakkad" },
+  { url: "https://youtu.be/rQsA1ixUCDU?si=pdXzWRdOfFuxKu_d", title: "ഭഗവാൻ ശ്രീരാമൻ വിശ്രമിച്ച തേനാരി | Thenari Theertham | Thenari Sree Rama Temple" },
+  // { url: "https://www.youtube.com/watch?v=...", title: "Video title" },
+];
+
+/* Accepts watch, youtu.be, embed, shorts and live links */
+export function youtubeId(url = "") {
+  const m = String(url).match(
+    /(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/|v\/))([\w-]{11})/,
+  );
+  return m ? m[1] : null;
+}
+
+/* Valid videos only, with their YouTube id. Used by History and Gallery. */
+export const videoItems = templeVideos
+  .map((v) => ({ ...v, id: youtubeId(v.url) }))
+  .filter((v) => v.id);

@@ -1,17 +1,20 @@
 import { Link } from "react-router-dom";
-import { festivals, templeData as t } from "../data/templeData.js";
+import { useData } from "../data/useData.js";
+import { useLang } from "../i18n/LanguageContext.jsx";
 import { PageHero, Reveal, Section, SectionTitle, usePageMeta } from "../components/ui.jsx";
 
 export default function FestivalsPage() {
-  usePageMeta("Festivals & Events | Thenari Theertham", "Annual festivals and observances at Sree Madhyarani Sree Rama Temple, Elappully, Palakkad.");
+  const { t, festivals } = useData();
+  const { tx } = useLang();
+  usePageMeta(tx("festivals.title"), tx("festivals.desc"));
   return (
     <>
-      <PageHero kicker="ഉത്സവങ്ങൾ" title="Festivals & Events" sub="The temple's annual calendar of worship." className="hero-festivals">
-        <img className="spin-slow" src="/images/temple/chakra.webp" alt="" />
+      <PageHero kicker={tx("festivals.kicker")} title={tx("festivals.pageTitle")} sub={tx("festivals.sub")} className="hero-festivals">
+        <img className="spin-slow" src="/images/temple/festive.png" alt="" />
       </PageHero>
 
       <Section className="fx-sec">
-        <SectionTitle kicker="Through the year" title="Festivals and observances" sub="Dates change every year, so please confirm with the temple before you plan a visit." />
+        <SectionTitle kicker={tx("home.festKicker")} title={tx("common.festTitle")} sub={tx("common.festSub")} />
         <div className="fx-list">
           {festivals.map((f, i) => (
             <Reveal key={f.name} variant={i % 2 ? "right" : "left"} className={`fx-row ${i % 2 ? "rev" : ""}`}>
@@ -29,10 +32,10 @@ export default function FestivalsPage() {
         </div>
 
         <Reveal className="fx-cta">
-          <p>Planning to attend? Call the temple to confirm this year's dates.</p>
+          <p>{tx("festivals.cta")}</p>
           <div className="btn-row">
-            <a className="btn btn-maroon" href={`tel:${t.contact.phone.replace(/\s/g, "")}`}>Call {t.contact.phone}</a>
-            <Link className="btn btn-line" to="/visit#contact">Visit & Contact</Link>
+            <a className="btn btn-maroon" href={`tel:${t.contact.phone.replace(/\s/g, "")}`}>{tx("festivals.call", { phone: t.contact.phone })}</a>
+            <Link className="btn btn-line" to="/visit#contact">{tx("festivals.reach")}</Link>
           </div>
         </Reveal>
       </Section>
