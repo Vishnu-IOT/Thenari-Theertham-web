@@ -6,7 +6,7 @@ export default function LangSwitch() {
   return (
     <div className="lng-switch" role="group" aria-label={tx("lang.label")}>
       <button type="button" lang="ml" className={lang === "ml" ? "on" : ""} aria-pressed={lang === "ml"} onClick={() => setLang("ml")}>
-        {/* മലയാളം */} ML
+        ML
       </button>
       <button type="button" lang="en" aria-label="English" className={lang === "en" ? "on" : ""} aria-pressed={lang === "en"} onClick={() => setLang("en")}>
         EN

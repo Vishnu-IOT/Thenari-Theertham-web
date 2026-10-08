@@ -628,6 +628,36 @@ export const gallery = [
     "Theertham",
     "Carving on the boat",
   ),
+  photo(
+    "/images/gallery/12.jpg",
+    600,
+    800,
+    "Deity",
+    "Sacred deity adorned with flowers",
+  ),
+
+  photo(
+    "/images/gallery/13.jpg",
+    800,
+    533,
+    "Architecture",
+    "Traditional temple architecture",
+  ),
+
+  photo(
+    "/images/gallery/14.jpg",
+    600,
+    900,
+    "Theertham",
+    "Theertham and temple surroundings",
+  ),
+  photo(
+    "/images/gallery/15.jpg",
+    738,
+    492,
+    "Temple",
+    "Temple surrounded by greenery",
+  ),
 ];
 
 export const galleryCategories = [
@@ -643,9 +673,20 @@ export const galleryCategories = [
    https://www.youtube.com/watch?v=XXXX | https://youtu.be/XXXX | .../shorts/XXXX
    Leave the list empty and the video section is hidden. */
 export const templeVideos = [
-  { url: "https://youtu.be/x38O59Sz10I?si=nIAZbx46kGxx59Xs", title: "Thenari Theertham, Sree Madhyarani Sree Rama Temple|Palakkad|Kerala" },
-  { url: "https://youtu.be/cd9fs-mJs9Q?si=xMQmRdVKL8ptCWrA", title: "தேனாரி இராமர் கோவில் || Elapully || chitoor || thenari || palakkad" },
-  { url: "https://youtu.be/rQsA1ixUCDU?si=pdXzWRdOfFuxKu_d", title: "ഭഗവാൻ ശ്രീരാമൻ വിശ്രമിച്ച തേനാരി | Thenari Theertham | Thenari Sree Rama Temple" },
+  {
+    url: "https://youtu.be/x38O59Sz10I?si=nIAZbx46kGxx59Xs",
+    title:
+      "Thenari Theertham, Sree Madhyarani Sree Rama Temple|Palakkad|Kerala",
+  },
+  {
+    url: "https://youtu.be/cd9fs-mJs9Q?si=xMQmRdVKL8ptCWrA",
+    title: "தேனாரி இராமர் கோவில் || Elapully || chitoor || thenari || palakkad",
+  },
+  {
+    url: "https://youtu.be/rQsA1ixUCDU?si=pdXzWRdOfFuxKu_d",
+    title:
+      "ഭഗവാൻ ശ്രീരാമൻ വിശ്രമിച്ച തേനാരി | Thenari Theertham | Thenari Sree Rama Temple",
+  },
   // { url: "https://www.youtube.com/watch?v=...", title: "Video title" },
 ];
 
