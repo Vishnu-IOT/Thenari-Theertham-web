@@ -3,7 +3,7 @@ import { strings } from "./strings.js";
 
 /* Malayalam is the default language. A visitor's own choice is remembered. */
 export const DEFAULT_LANG = "ml";
-export const LANGS = ["ml", "en"];
+export const LANGS = ["ml", "en", "ta"];
 const STORE_KEY = "thenari-lang";
 
 const readSaved = () => {

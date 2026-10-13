@@ -9,9 +9,7 @@ export default function FestivalsPage() {
   usePageMeta(tx("festivals.title"), tx("festivals.desc"));
   return (
     <>
-      <PageHero kicker={tx("festivals.kicker")} title={tx("festivals.pageTitle")} sub={tx("festivals.sub")} className="hero-festivals">
-        <img className="spin-slow" src="/images/temple/festive.png" alt="" />
-      </PageHero>
+      <PageHero kicker={tx("festivals.kicker")} title={tx("festivals.pageTitle")} sub={tx("festivals.sub")} className="hero-festivals" bg="/images/temple/festive.png" />
 
       <Section className="fx-sec">
         <SectionTitle kicker={tx("home.festKicker")} title={tx("common.festTitle")} sub={tx("common.festSub")} />

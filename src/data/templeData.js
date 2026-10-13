@@ -9,7 +9,7 @@ const EVENING = { label: "5:00 PM – 7:00 PM" };
 export const templeData = {
   name: "Thenari Theertham",
 
-  subtitle: "Sree Madhyarani Sree Rama Temple",
+  subtitle: "Sree Madhyaranya Sree Rama Temple Thenari",
 
   tagline:
     "A sacred place of devotion, tradition and timeless faith in the heart of Thenari.",
@@ -21,7 +21,7 @@ export const templeData = {
   heritage: [
     "Thenari Sree Rama Temple is situated at Thenari in Elappully, Palakkad, Kerala. The temple is closely associated with the sacred Thenari Theertham, a natural spring or water source located in front of the temple.",
 
-    "According to traditional accounts, the area is associated with the Ramayana and is believed to have been connected with the journey of Sree Rama and Lakshmana through the region. These stories form part of the religious tradition and faith associated with the temple.",
+    "The Thenari Sri Rama Temple is a sacred site that evokes blessed memories of the Ramayana and radiates the glory of devotion to Lord Rama. According to tradition, this region is linked to the Ramayana; it is believed that Lord Rama and Lakshmana traveled along this path. A confluence of faith, devotion, and legend, this temple stands as a beautiful part of our culture.",
 
     "The temple continues to be a place of worship where devotees gather for daily prayers, special offerings, ancestral rites and important religious observances.",
   ],
@@ -53,7 +53,7 @@ export const templeData = {
 
     evening: EVENING,
 
-    note: "Temple timings may vary on special occasions and festival days. Devotees are advised to confirm the timings before visiting.",
+    note: "On special days, the temple's closing time may differ.",
   },
 
   // =======================================================
@@ -99,26 +99,19 @@ export const templeData = {
   reach: [
     {
       mode: "By Road",
-
-      text: "Thenari is located in Elappully, Palakkad district, along the Palakkad–Pollachi road corridor. Visitors can use the temple's map location to plan their current driving route.",
+      text: "Thenari Theertham, Sree Madhyarani Sree Rama Temple, is located in Elappully, Palakkad district, along the Palakkad–Pollachi road corridor. Visitors can use the temple's map location to plan their driving route.",
     },
-
     {
       mode: "By Bus",
-
-      text: "Local bus services connect the surrounding Elappully and Thenari areas. Visitors are advised to check the latest local bus routes before travelling.",
+      text: "Palakkad is approximately 14 km from the temple. Local bus services connect the surrounding Elappully and Thenari areas. Visitors are advised to check the latest bus routes and timings before travelling.",
     },
-
     {
       mode: "By Train",
-
-      text: "Palakkad railway station is approximately 12 km from the temple according to published travel descriptions. Local transport can be used for the onward journey.",
+      text: "Palakkad Railway Station is approximately 12 km from the temple. Visitors can travel by train to Palakkad and arrange local transport for the onward journey. For train schedules and ticket bookings, visit https://www.irctc.co.in/nget/train-search.",
     },
-
     {
       mode: "By Air",
-
-      text: "Visitors travelling by air can use a current route planner to determine the most suitable airport and onward road connection to Thenari.",
+      text: "Visitors can reach the temple by road from nearby airports.\n Coimbatore International Airport is approximately 65 km away, \n Calicut International Airport is approximately 115 km away, \nCochin International Airport is approximately 120 km away.",
     },
   ],
 };
@@ -255,13 +248,13 @@ export const navLinks = [
 
 export const deities = [
   {
-    id: "sastha",
+    id: "ganesha",
 
-    name: "Sree Sastha",
+    name: "Lord Ganesha",
 
-    image: "/images/deity/sastha.jpg",
+    image: "/images/deity/ganesha.jpg",
 
-    text: "Sree Sastha is one of the deities associated with the temple.",
+    text: "Ganesha is one of the deities associated with the temple.",
   },
 
   {
@@ -283,6 +276,15 @@ export const deities = [
 
     text: "Lord Anjaneya is among the deities associated with the temple and its devotional traditions.",
   },
+  {
+    id: "navagraha",
+
+    name: "Navagrahas",
+
+    image: "/images/deity/navagraha.jpeg",
+
+    text: "Navagrahas are the nine celestial deities in Hindu astrology who represent the Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, and Ketu.",
+  },
 ];
 
 export const homeDeities = [
@@ -296,13 +298,13 @@ export const homeDeities = [
     text: "Sree Rama is the principal deity associated with Thenari Sree Rama Temple and is at the heart of the temple's devotional tradition.",
   },
   {
-    id: "sastha",
+    id: "ganesha",
 
-    name: "Sree Sastha",
+    name: "Lord Ganesha",
 
-    image: "/images/deity/sastha.jpg",
+    image: "/images/deity/ganesha.jpg",
 
-    text: "Sree Sastha is one of the deities associated with the temple.",
+    text: "Ganesha is one of the deities associated with the temple.",
   },
 
   {
@@ -350,11 +352,11 @@ export const heroSlides = [
 
 export const poojas = [
   {
-    name: "Unniyappam",
+    name: "Ottayappam",
 
     time: "Temple schedule",
 
-    text: "Unniyappam is one of the offerings listed among the temple's devotional services.",
+    text: "Ottayappam is one of the offerings listed among the temple's devotional services.",
 
     details:
       "Please confirm the current offering procedure and timings with the temple.",
@@ -537,7 +539,7 @@ export const gallery = [
     "/images/gallery/4.jpg",
     447,
     447,
-    "Theertham",
+    "Temple",
     "The golden boat on the theertham",
   ),
   photo(
@@ -555,21 +557,14 @@ export const gallery = [
     "Temple entrance and signboard",
   ),
   photo(
-    "/images/temple/gallery/boat-deity.webp",
-    805,
-    920,
-    "Theertham",
-    "Deity on the golden boat",
-  ),
-  photo(
     "/images/gallery/5.jpg",
     387,
     516,
-    "Architecture",
+    "Temple",
     "Carved wooden temple facade",
   ),
-  photo("/images/deity/sastha.jpg", 640, 480, "Deity", "Sree Sastha"),
-  photo("/images/gallery/7.jpg", 399, 501, "Theertham", "The boat at dusk"),
+  photo("/images/deity/ganesha.jpg", 640, 480, "Deity", "Lord Ganesha"),
+  photo("/images/gallery/7.jpg", 399, 501, "Temple", "The boat at dusk"),
   photo(
     "/images/gallery/3.jpg",
     738,
@@ -578,27 +573,8 @@ export const gallery = [
     "The path through the greenery",
   ),
   photo("/images/deity/ananeya.jpg", 736, 981, "Deity", "Lord Anjaneya"),
-  photo(
-    "/images/gallery/9.jpg",
-    522,
-    383,
-    "Architecture",
-    "Tiled temple roofs",
-  ),
-  photo(
-    "/images/temple/gallery/boat-garland.webp",
-    425,
-    550,
-    "Theertham",
-    "Garlanded boat carving",
-  ),
-  photo(
-    "/images/gallery/6.jpg",
-    364,
-    549,
-    "Architecture",
-    "Traditional Kerala hall",
-  ),
+  photo("/images/gallery/9.jpg", 522, 383, "Temple", "Tiled temple roofs"),
+  photo("/images/gallery/6.jpg", 364, 549, "Temple", "Traditional Kerala hall"),
   photo("/images/deity/2.jpg", 736, 981, "Deity", "Deities on the golden seat"),
   photo(
     "/images/gallery/10.jpg",
@@ -611,7 +587,7 @@ export const gallery = [
     "/images/gallery/8.jpg",
     415,
     739,
-    "Theertham",
+    "Temple",
     "The golden boat with the deity",
   ),
   photo(
@@ -620,13 +596,6 @@ export const gallery = [
     675,
     "Deity",
     "Deities adorned with garlands",
-  ),
-  photo(
-    "/images/temple/gallery/boat-carving.webp",
-    805,
-    634,
-    "Theertham",
-    "Carving on the boat",
   ),
   photo(
     "/images/gallery/12.jpg",
@@ -640,7 +609,7 @@ export const gallery = [
     "/images/gallery/13.jpg",
     800,
     533,
-    "Architecture",
+    "Temple",
     "Traditional temple architecture",
   ),
 
@@ -648,7 +617,7 @@ export const gallery = [
     "/images/gallery/14.jpg",
     600,
     900,
-    "Theertham",
+    "Temple",
     "Theertham and temple surroundings",
   ),
   photo(
@@ -658,13 +627,48 @@ export const gallery = [
     "Temple",
     "Temple surrounded by greenery",
   ),
+  photo(
+    "/images/gallery/16.jpg",
+    1600,
+    900,
+    "Temple",
+    "Aerial view of the temple beside the sacred theertham",
+  ),
+  photo(
+    "/images/gallery/17.jpg",
+    1280,
+    853,
+    "Events",
+    "Temple inauguration ceremony with devotees",
+  ),
+  photo(
+    "/images/gallery/18.jpg",
+    1500,
+    1000,
+    "Temple",
+    "Traditional temple shrine surrounded by devotees",
+  ),
+  photo(
+    "/images/gallery/19.jpg",
+    640,
+    480,
+    "Rituals",
+    "Sacred temple ritual during the shrine's construction",
+  ),
+  photo(
+    "/images/gallery/20.jpg",
+    1600,
+    900,
+    "Temple",
+    "Bird's-eye view of the temple and surrounding paddy fields",
+  ),
 ];
 
 export const galleryCategories = [
   "All",
   "Temple",
-  "Architecture",
-  "Theertham",
+  // "Architecture",
+  // "Theertham",
   "Deity",
 ];
 
@@ -676,7 +680,7 @@ export const templeVideos = [
   {
     url: "https://youtu.be/x38O59Sz10I?si=nIAZbx46kGxx59Xs",
     title:
-      "Thenari Theertham, Sree Madhyarani Sree Rama Temple|Palakkad|Kerala",
+      "Thenari Theertham, Sree Madhyaranya Sree Rama Temple Thenari|Palakkad|Kerala",
   },
   {
     url: "https://youtu.be/cd9fs-mJs9Q?si=xMQmRdVKL8ptCWrA",
@@ -686,6 +690,11 @@ export const templeVideos = [
     url: "https://youtu.be/rQsA1ixUCDU?si=pdXzWRdOfFuxKu_d",
     title:
       "ഭഗവാൻ ശ്രീരാമൻ വിശ്രമിച്ച തേനാരി | Thenari Theertham | Thenari Sree Rama Temple",
+  },
+  {
+    url: "https://youtu.be/n00fE4av47E?si=KwThNxToRbxeDmLR",
+    title:
+      "അത്ഭുത തീർത്ഥം ഒഴുകുന്ന തേനാരി ശ്രീരാമക്ഷേത്രം /Thenari Sree Rama Temple",
   },
   // { url: "https://www.youtube.com/watch?v=...", title: "Video title" },
 ];
@@ -702,3 +711,69 @@ export function youtubeId(url = "") {
 export const videoItems = templeVideos
   .map((v) => ({ ...v, id: youtubeId(v.url) }))
   .filter((v) => v.id);
+
+/* =========================================================
+   INSTAGRAM REELS — shown on the History page ("Reels" tab) and in the
+   Gallery ("Reels" section).
+   Paste the exact reel link in "url":
+     https://www.instagram.com/reel/XXXXXXXXXXX/
+   Optional "cover": a screenshot of the reel saved in /public/images/reels/
+   (used as the thumbnail; if left out, a temple photo is used).
+   Leave the list empty and the reels tabs/sections are hidden.
+   ========================================================= */
+export const instagramProfile = ""; // e.g. "https://www.instagram.com/your_temple_page/"
+
+/* Titles can be plain text, or one text per language: { en: "...", ml: "...", ta: "..." }.
+   Optional "file": your own video, e.g. "/reels/reel-1.mp4" (put the file in
+   /public/reels/). With "file" set, the reel plays in the website's own player
+   and Instagram is not used at all. Without it, Instagram's player is embedded
+   inside the page (sandboxed, so it can never send visitors to Instagram). */
+export const templeReels = [
+  {
+    url: "https://www.instagram.com/reel/DbpgDkVCBpe/?cplk=MWpwdXQ1dGtzeDI1NQ==",
+    title: {
+      en: "Evening deeparadhana at Thenari",
+      ml: "തേനാരിയിലെ സന്ധ്യാ ദീപാരാധന",
+      ta: "தேனாரியில் மாலை தீபாராதனை",
+    },
+    cover: "/images/reels/reel-1.jpg",
+    // file: "/reels/reel-1.mp4",
+  },
+  {
+    url: "https://www.instagram.com/reel/DMz80qMyEB-/?stkn=NHgxcnNobXEwbDN2",
+    title: {
+      en: "The Tenari Rama Lakshmana Temple visited by Jayam Ravi.",
+      ml: "ജയം രവി സന്ദർശിച്ച തേനാരി രാമ ലക്ഷ്മണ ക്ഷേത്രം.",
+      ta: "ஜெயம் ரவி சென்ற தேனாரி ராம லட்சுமண கோவில்.",
+    },
+    cover: "/images/reels/reel-1.jpg",
+    // file: "/reels/reel-1.mp4",
+  },
+  {
+    url: "https://www.instagram.com/reel/DUhGEUikvUG/?rpxt=MWRzc2N1bXMyZjkxeQ==",
+    title: {
+      en: "Tenari Rama Temple!!",
+      ml: "തേനാരി രാമ ക്ഷേത്രം!!",
+      ta: "தேனாரி ராமர் கோவில்!!",
+    },
+    cover: "/images/reels/reel-1.jpg",
+    // file: "/reels/reel-1.mp4",
+  },
+];
+
+/* Picks the title for the visitor's language */
+export const titleOf = (t, lang) =>
+  t && typeof t === "object" ? t[lang] || t.en || "" : t || "";
+
+/* Accepts reel, reels, p and tv links (with or without ?igsh=... tracking) */
+export function instagramId(url = "") {
+  const m = String(url).match(
+    /instagram\.com\/(?:[\w.]+\/)?(?:reels?|p|tv)\/([\w-]+)/i,
+  );
+  return m ? m[1] : null;
+}
+
+/* Valid reels only, with their Instagram code. Used by History and Gallery. */
+export const reelItems = templeReels
+  .map((r) => ({ ...r, id: instagramId(r.url) }))
+  .filter((r) => r.id);

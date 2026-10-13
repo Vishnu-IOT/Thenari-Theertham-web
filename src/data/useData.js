@@ -1,5 +1,6 @@
 import * as en from "./templeData.js";
 import * as ml from "./templeData.ml.js";
+import * as ta from "./templeData.ta.js";
 import { useLang } from "../i18n/LanguageContext.jsx";
 
 /* Images, URLs, ids and numbers stay in templeData.js. Only the words are
@@ -36,7 +37,7 @@ function build(o = {}) {
   };
 }
 
-const bundles = { en: build(), ml: build(ml) };
+const bundles = { en: build(), ml: build(ml), ta: build(ta) };
 
 /* English bundle, for text that must stay Latin (e.g. the UPI payment note). */
 export const english = bundles.en;

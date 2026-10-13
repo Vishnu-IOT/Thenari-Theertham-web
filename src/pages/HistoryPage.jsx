@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { videoItems as videos } from "../data/templeData.js";
+import ReelPlayer, { CoverImg } from "../components/ReelPlayer.jsx";
+import { titleOf, videoItems as videos, reelItems as reels, gallery as photos, instagramProfile } from "../data/templeData.js";
 import { useData } from "../data/useData.js";
 import { useLang } from "../i18n/LanguageContext.jsx";
 import {
@@ -12,7 +13,7 @@ import {
 } from "../components/ui.jsx";
 
 const sectionIds = ["heritage", "deities", "theertham", "seva", "timings"];
-if (videos.length) sectionIds.splice(1, 0, "video");
+if (videos.length || reels.length) sectionIds.splice(1, 0, "video");
 
 /* Sticky in-page navigation that follows the reader */
 function JumpNav() {
@@ -72,7 +73,7 @@ function Heritage() {
           <figure className="mandala-sticky">
             <img
               className="heritage-photo"
-              src="/images/gallery/5.jpg"
+              src="/images/deity/1.jpg"
               alt={tx("history.photoAlt")}
               width="387"
               height="516"
@@ -144,10 +145,57 @@ function VideoCard({ id, title }) {
   );
 }
 
-/* Horizontal scroller with arrow buttons (swipe works on touch) */
+/* Instagram reel: portrait phone-style card. It plays right here on the site
+   (see ReelPlayer): nothing on the card takes the visitor to Instagram. */
+function ReelCard({ reel, index }) {
+  const { tx, lang } = useLang();
+  const [play, setPlay] = useState(false);
+  const label = titleOf(reel.title, lang) || tx("history.reelFallback");
+  const fallback = photos[index % photos.length]?.src;
+  return (
+    <figure className="rl-card">
+      <div className={`rl-frame ${play ? "playing" : ""}`}>
+        {play ? (
+          <ReelPlayer reel={reel} title={label} />
+        ) : (
+          <button
+            type="button"
+            className="rl-poster"
+            onClick={() => setPlay(true)}
+            aria-label={tx("history.playReel", { title: label })}
+          >
+            <CoverImg src={reel.cover} fallback={fallback} alt="" loading="lazy" decoding="async" />
+            <span className="rl-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4.2" />
+                <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" />
+              </svg>
+              {tx("history.tabReels")}
+            </span>
+            <span className="rl-play" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+            </span>
+            <span className="rl-cap">
+              <b>{label}</b>
+              <small>{tx("history.reelTap")}</small>
+            </span>
+          </button>
+        )}
+      </div>
+    </figure>
+  );
+}
+
+/* Horizontal scroller with arrow buttons (swipe works on touch).
+   YouTube videos and Instagram reels sit on two tabs; with only one kind
+   of media the tabs disappear. */
 function VideoSection() {
-  const { tx } = useLang();
+  const { tx, lang } = useLang();
   const track = useRef(null);
+  const hasVideos = videos.length > 0;
+  const hasReels = reels.length > 0;
+  const [tab, setTab] = useState(hasVideos ? "videos" : "reels");
   const [edge, setEdge] = useState({ start: true, end: false });
 
   const update = () => {
@@ -162,9 +210,10 @@ function VideoSection() {
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
-  }, []);
+  }, [tab]);
 
-  if (!videos.length) return null;
+  if (!hasVideos && !hasReels) return null;
+  const isReels = tab === "reels";
   const go = (dir) => {
     const el = track.current;
     const card = el.querySelector(".video-slide");
@@ -177,36 +226,74 @@ function VideoSection() {
       <div className="container">
         <SectionTitle
           kicker={tx("history.videoKicker")}
-          title={tx("history.videoTitle")}
-          sub={tx("history.videoSub")}
+          title={isReels ? tx("history.reelTitle") : tx("history.videoTitle")}
+          sub={isReels ? tx("history.reelSub") : tx("history.videoSub")}
         />
-        <div className="video-scroller">
+
+        {hasVideos && hasReels && (
+          <div className="rl-tabs" role="tablist" aria-label={tx("history.tabs")}>
+            <button type="button" role="tab" aria-selected={!isReels} className={!isReels ? "on" : ""} onClick={() => setTab("videos")}>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+              {tx("history.tabVideos")} <small>{videos.length}</small>
+            </button>
+            <button type="button" role="tab" aria-selected={isReels} className={isReels ? "on" : ""} onClick={() => setTab("reels")}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4.2" />
+                <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" />
+              </svg>
+              {tx("history.tabReels")} <small>{reels.length}</small>
+            </button>
+          </div>
+        )}
+
+        <div className="video-scroller" key={tab}>
           <button
             type="button"
             className="video-arrow prev"
             onClick={() => go(-1)}
             disabled={edge.start}
-            aria-label={tx("history.videoPrev")}
+            aria-label={isReels ? tx("history.reelPrev") : tx("history.videoPrev")}
           >
             ‹
           </button>
-          <div className="video-track" ref={track} onScroll={update} tabIndex={0} aria-label={tx("history.videoTrack")}>
-            {videos.map((v) => (
-              <div className="video-slide" key={v.id}>
-                <VideoCard id={v.id} title={v.title} />
-              </div>
-            ))}
+          <div
+            className={`video-track ${isReels ? "rl-track" : ""}`}
+            ref={track}
+            onScroll={update}
+            tabIndex={0}
+            aria-label={isReels ? tx("history.reelTrack") : tx("history.videoTrack")}
+          >
+            {isReels
+              ? reels.map((r, i) => (
+                  <div className="video-slide rl-slide" key={r.id}>
+                    <ReelCard reel={r} index={i} />
+                  </div>
+                ))
+              : videos.map((v) => (
+                  <div className="video-slide" key={v.id}>
+                    <VideoCard id={v.id} title={titleOf(v.title, lang)} />
+                  </div>
+                ))}
           </div>
           <button
             type="button"
             className="video-arrow next"
             onClick={() => go(1)}
             disabled={edge.end}
-            aria-label={tx("history.videoNext")}
+            aria-label={isReels ? tx("history.reelNext") : tx("history.videoNext")}
           >
             ›
           </button>
         </div>
+
+        {isReels && instagramProfile && (
+          <p className="rl-follow">
+            <a className="btn btn-gold" href={instagramProfile} target="_blank" rel="noopener noreferrer">
+              {tx("history.followIG")}
+            </a>
+          </p>
+        )}
       </div>
     </section>
   );
@@ -402,9 +489,8 @@ export default function HistoryPage() {
         title={tx("history.pageTitle")}
         sub={t.subtitle}
         className="hero-about"
-      >
-        <img className="spin-slow" src="/images/temple/history.png" alt="" />
-      </PageHero>
+        bg="/images/temple/history.png"
+      />
       <JumpNav />
       <Heritage />
       <VideoSection />

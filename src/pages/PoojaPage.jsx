@@ -5,7 +5,7 @@ import { PageHero, TempleTitle } from "../components/Ornaments.jsx";
 import { templeData as t, poojas } from "../data/templeData.js";
 
 export default function PoojaPage() {
-  usePageMeta("Pooja & Seva | Thenari Theertham", "Vazhipadu and offerings at Sree Madhyarani Sree Rama Temple.");
+  usePageMeta("Pooja & Seva | Thenari Theertham", "Vazhipadu and offerings at Sree Madhyaranya Sree Rama Temple Thenari.");
   const [open, setOpen] = useState(null);
   return (
     <div className="page-pooja">

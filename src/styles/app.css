@@ -117,7 +117,10 @@ h3 {
   flex: none;
   display: grid;
   place-items: center;
-  border: 1.5px solid var(--brass);
+  /* border: 1.5px solid var(--brass); */
+}
+.emblem img{
+  width: 36px;
 }
 .brand-text {
   display: flex;
@@ -245,6 +248,9 @@ h3 {
     width: 42px;
     height: 42px;
     font-size: 1.4rem;
+  }
+  .emblem img {
+    width: 32px;
   }
 }
 /* hero */
@@ -1249,9 +1255,9 @@ p {
 .emblem {
   border-radius: 50% 50% 4px 4px;
   background: var(--cream);
-  box-shadow:
+  /* box-shadow:
     0 0 0 3px var(--cream),
-    0 0 0 4px var(--line);
+    0 0 0 4px var(--line); */
 }
 
 .desktop-nav a::after {

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useLang } from "../i18n/LanguageContext.jsx";
+import ReelPlayer from "./ReelPlayer.jsx";
 
 export default function Lightbox({ items, index, onClose, onChange }) {
   const { tx } = useLang();
@@ -43,6 +44,10 @@ export default function Lightbox({ items, index, onClose, onChange }) {
               allowFullScreen
               referrerPolicy="strict-origin-when-cross-origin"
             />
+          </div>
+        ) : item.type === "reel" ? (
+          <div className="gl-reel">
+            <ReelPlayer reel={item.reel} title={item.caption} />
           </div>
         ) : (
           <img src={item.src} alt={item.alt} />

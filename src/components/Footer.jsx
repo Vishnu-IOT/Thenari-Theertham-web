@@ -5,23 +5,34 @@ import { Ornament, istWeekday } from "./ui.jsx";
 
 export default function Footer() {
   const { t, navLinks, weeklyTimings } = useData();
-  const { tx } = useLang();
+  const { tx, lang } = useLang();
   const now = istWeekday();
   return (
     <footer className="site-footer">
       <div className="ft-watermark" aria-hidden="true">
         <img src="/images/temple/chakra.webp" alt="" />
-        <span lang="ml">ശ്രീ രാമ</span>
+        <span>{tx("common.ram")}</span>
+      </div>
+
+      {/* Temple name + daily timings, centred at the top of the footer */}
+      <div className="container ft-top">
+        <img src="/images/temple/chakra.webp" alt="" width="64" height="64" loading="lazy" />
+        <h2>{t.name}</h2>
+        <p className="ft-sub">{t.subtitle}</p>
+        <p className="mantra">{tx("common.ayodhyaMantra")}</p>
+        {/* <ul className="ft-hours" aria-label={tx("footer.timings")}>
+          <li>
+            {lang === "en" && <span>{tx("common.morning")}</span>}
+            <b>{t.timings.morning.label}</b>
+          </li>
+          <li>
+            {lang === "en" && <span>{tx("common.evening")}</span>}
+            <b>{t.timings.evening.label}</b>
+          </li>
+        </ul> */}
       </div>
 
       <div className="container footer-grid">
-        <div className="footer-brand">
-          <img src="/images/temple/chakra.webp" alt="" width="72" height="72" loading="lazy" />
-          <h2>{t.name}</h2>
-          <p>{t.subtitle}</p>
-          <p className="mantra">॥ ശ്രീ രാമ ॥</p>
-        </div>
-
         <nav aria-label={tx("footer.nav")}>
           <h3>{tx("footer.pages")}</h3>
           <ul>{navLinks.map((l) => <li key={l.to}><Link to={l.to}>{l.label}</Link></li>)}</ul>

@@ -1,73 +1,160 @@
 import { useMemo, useState } from "react";
-import { galleryCategories, videoItems } from "../data/templeData.js";
+import { videoItems, reelItems, titleOf } from "../data/templeData.js";
 import { useData } from "../data/useData.js";
 import { useLang } from "../i18n/LanguageContext.jsx";
-import { PageHero, usePageMeta } from "../components/ui.jsx";
+import { PageHero, Reveal, SectionTitle, usePageMeta } from "../components/ui.jsx";
 import Lightbox from "../components/Lightbox.jsx";
+import { CoverImg } from "../components/ReelPlayer.jsx";
+
+/* One single gallery section: photos, videos and Instagram reels live in the
+   same grid. The pills above it filter the grid (All / Temple / Deity / ...). */
+const ORDER = ["Temple", "Deity", "Video", "Reel"];
+
+function Tile({ g, index, onOpen, fallback }) {
+  const { tx } = useLang();
+  const isVideo = g.type === "video";
+  const isReel = g.type === "reel";
+  return (
+    <button
+      type="button"
+      className="gl-tile"
+      onClick={() => onOpen(index)}
+      aria-label={tx(isReel ? "gallery.playReel" : isVideo ? "gallery.playVideo" : "gallery.openPhoto", { caption: g.caption })}
+    >
+      <span className="gl-media">
+        <CoverImg
+          src={g.src}
+          fallback={fallback}
+          alt={g.alt}
+          width={isReel ? 360 : isVideo ? 480 : g.w}
+          height={isReel ? 640 : isVideo ? 300 : g.h}
+          loading="lazy"
+          decoding="async"
+        />
+        {(isVideo || isReel) && (
+          <span className="gl-play" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+          </span>
+        )}
+        {isReel && (
+          <span className="gx-ig" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4.2" />
+              <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" />
+            </svg>
+            {tx("cat.Reel")}
+          </span>
+        )}
+      </span>
+      <span className="gl-cap">
+        <b>{g.caption}</b>
+        <small>{tx(`cat.${g.category}`)}</small>
+      </span>
+    </button>
+  );
+}
 
 export default function GalleryPage() {
   const { gallery: photos } = useData();
-  const { tx } = useLang();
+  const { tx, lang } = useLang();
   usePageMeta(tx("gallery.title"), tx("gallery.desc"));
+  const [cat, setCat] = useState("All");
+  const [active, setActive] = useState(null);
 
-  /* Videos are mixed in among the photos (one after every few photos) */
-  const { gallery, videoTiles, categories } = useMemo(() => {
-    const fallback = tx("gallery.videoFallback");
-    const tiles = videoItems.map((v) => ({
+  const all = useMemo(() => {
+    const fallbackVideo = tx("gallery.videoFallback");
+    const fallbackReel = tx("gallery.reelFallback");
+    const videos = videoItems.map((v) => ({
       id: `video-${v.id}`,
       type: "video",
       videoId: v.id,
       src: `https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`,
       category: "Video",
-      caption: v.title || fallback,
-      alt: v.title || fallback,
+      caption: titleOf(v.title, lang) || fallbackVideo,
+      alt: titleOf(v.title, lang) || fallbackVideo,
     }));
-    const all = [...photos];
-    if (tiles.length) {
-      const gap = Math.max(2, Math.floor(photos.length / (tiles.length + 1)));
-      tiles.forEach((v, k) => all.splice(Math.min(all.length, gap * (k + 1) + k), 0, v));
-    }
-    const cats = tiles.length && !galleryCategories.includes("Video") ? [...galleryCategories, "Video"] : galleryCategories;
-    return { gallery: all, videoTiles: tiles, categories: cats };
-  }, [photos, tx]);
-  const [cat, setCat] = useState("All");
-  const [active, setActive] = useState(null);
-  const items = cat === "All" ? gallery : gallery.filter((g) => g.category === cat);
-  const count = (c) => (c === "All" ? gallery.length : gallery.filter((g) => g.category === c).length);
+    const reels = reelItems.map((r, i) => ({
+      id: `reel-${r.id}`,
+      type: "reel",
+      reel: r,
+      src: r.cover || photos[i % photos.length]?.src,
+      category: "Reel",
+      caption: titleOf(r.title, lang) || fallbackReel,
+      alt: titleOf(r.title, lang) || fallbackReel,
+    }));
+    // mix the videos and reels in between the photos so the grid has rhythm
+    const extras = [...videos, ...reels];
+    const every = Math.max(3, Math.floor(photos.length / (extras.length + 1)));
+    const mixed = [];
+    photos.forEach((p, i) => {
+      mixed.push(p);
+      if ((i + 1) % every === 0 && extras.length) mixed.push(extras.shift());
+    });
+    return [...mixed, ...extras];
+  }, [photos, tx, lang]);
+
+  const cats = ORDER.filter((c) => all.some((g) => g.category === c));
+  const items = cat === "All" ? all : all.filter((g) => g.category === cat);
+  const fallback = photos[0]?.src;
+  const videoCount = all.filter((g) => g.type === "video").length;
+  const reelCount = all.filter((g) => g.type === "reel").length;
 
   return (
     <>
-      <PageHero kicker={tx("gallery.kicker")} title={tx("gallery.pageTitle")} sub={videoTiles.length ? tx("gallery.subVideos", { photos: photos.length, videos: videoTiles.length }) : tx("gallery.sub", { photos: photos.length })} className="hero-gallery">
+      <PageHero
+        kicker={tx("gallery.kicker")}
+        title={tx("gallery.pageTitle")}
+        sub={
+          reelCount
+            ? tx("gallery.subReels")
+            : videoCount
+              ? tx("gallery.subVideos", { photos: photos.length, videos: videoCount })
+              : tx("gallery.sub", { photos: photos.length })
+        }
+        className="hero-gallery"
+      >
         <div className="hero-collage">
-          {[photos[2], photos[1], photos[0]].map((g, i) => <img key={g.id} src={g.src} alt="" style={{ "--i": i }} />)}
+          {[photos[2], photos[1], photos[0]].filter(Boolean).map((g, i) => (
+            <img key={g.id} src={g.src} alt="" style={{ "--i": i }} />
+          ))}
         </div>
       </PageHero>
 
-      <section className="section gl-sec">
+      <section id="gallery" className="section gl-block gl-all" aria-label={tx("gallery.pageTitle")}>
         <div className="container">
-          <div className="gl-filters" role="group" aria-label={tx("gallery.filter")}>
-            {categories.map((c) => (
-              <button key={c} className={c === cat ? "on" : ""} aria-pressed={c === cat} onClick={() => setCat(c)}>
-                {tx(`cat.${c}`)} <small>{count(c)}</small>
-              </button>
-            ))}
-          </div>
+          <SectionTitle kicker={tx("gallery.kicker")} title={tx("gallery.secTitle")} sub={tx("gallery.secSub")} />
 
-          <ul className="gl-grid" key={cat}>
-            {items.map((g, i) => (
-              <li key={g.id} style={{ "--i": i }}>
-                <button onClick={() => setActive(i)} aria-label={tx(g.type === "video" ? "gallery.playVideo" : "gallery.openPhoto", { caption: g.caption })}>
-                  <img src={g.src} alt={g.alt} width={g.type === "video" ? 480 : g.w} height={g.type === "video" ? 360 : g.h} className={g.type === "video" ? "gl-vthumb" : ""} loading="lazy" decoding="async" />
-                  {g.type === "video" && <span className="gl-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg></span>}
-                  <span className="gl-cap"><b>{g.caption}</b><small>{tx(`cat.${g.category}`)}</small></span>
+          {cats.length > 1 && (
+            <div className="rl-tabs gx-filter" role="group" aria-label={tx("gallery.filter")}>
+              {["All", ...cats].map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  className={cat === c ? "on" : ""}
+                  aria-pressed={cat === c}
+                  onClick={() => setCat(c)}
+                >
+                  {tx(`cat.${c}`)}
+                  <small>{c === "All" ? all.length : all.filter((g) => g.category === c).length}</small>
                 </button>
-              </li>
+              ))}
+            </div>
+          )}
+
+          <ul className="gl-set masonry gx-grid" key={cat}>
+            {items.map((g, i) => (
+              <Reveal as="li" key={g.id} variant="zoom" delay={(i % 4) * 70} className={`gx-item gx-${g.type || "photo"}`}>
+                <Tile g={g} index={i} onOpen={setActive} fallback={fallback} />
+              </Reveal>
             ))}
           </ul>
         </div>
       </section>
 
-      {active !== null && <Lightbox items={items} index={active} onClose={() => setActive(null)} onChange={setActive} />}
+      {active !== null && (
+        <Lightbox items={items} index={active} onClose={() => setActive(null)} onChange={setActive} />
+      )}
     </>
   );
 }

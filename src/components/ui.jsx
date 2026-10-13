@@ -1,4 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
+import Slogan from "./Slogan.jsx";
 
 /* ---------- Scroll reveal ---------- */
 export function Reveal({
@@ -165,35 +166,43 @@ export function SectionTitle({
 }
 
 /* ---------- Compact page banner used by the inner pages ---------- */
-export function PageHero({ title, sub, kicker, children, className = "" }) {
+export function PageHero({ title, sub, kicker, children, className = "", bg, slogan = true }) {
   return (
-    <section className={`page-hero ${className}`}>
-      <Embers count={14} />
-      <div className="container page-hero-inner">
-        <div className="page-hero-copy">
-          {kicker && (
-            <p className="mantra rise" style={{ "--d": ".05s" }}>
-              {kicker}
-            </p>
-          )}
-          <h1 className="rise" style={{ "--d": ".15s" }}>
-            {title}
-          </h1>
-          {sub && (
-            <p className="page-hero-sub rise" style={{ "--d": ".3s" }}>
-              {sub}
-            </p>
+    <>
+      <section className={`page-hero ${bg ? "has-bg" : ""} ${className}`}>
+        {bg && (
+          <>
+            <img className="page-hero-bg" src={bg} alt="" aria-hidden="true" fetchpriority="high" decoding="async" />
+            <span className="page-hero-veil" aria-hidden="true" />
+          </>
+        )}
+        <Embers count={14} />
+        <div className="container page-hero-inner">
+          <div className="page-hero-copy">
+            {kicker && (
+              <p className="mantra rise" style={{ "--d": ".05s" }}>
+                {kicker}
+              </p>
+            )}
+            <h1 className="rise" style={{ "--d": ".15s" }}>
+              {title}
+            </h1>
+            {sub && (
+              <p className="page-hero-sub rise" style={{ "--d": ".3s" }}>
+                {sub}
+              </p>
+            )}
+          </div>
+          {!bg && (
+            <div className="page-hero-art rise" style={{ "--d": ".2s" }} aria-hidden="true">
+              {children}
+            </div>
           )}
         </div>
-        <div
-          className="page-hero-art rise"
-          style={{ "--d": ".2s" }}
-          aria-hidden="true"
-        >
-          {children}
-        </div>
-      </div>
-    </section>
+      </section>
+      {/* {slogan && <Slogan />} */}
+      {slogan && <Slogan key={typeof window !== "undefined" ? window.location.pathname : "s"} />}
+    </>
   );
 }
 

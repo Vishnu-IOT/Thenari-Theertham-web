@@ -4,7 +4,7 @@ import { PageHero, TempleTitle, CarvedFrame, Kasavu } from "../components/Orname
 import { templeData as t, deities, highlights } from "../data/templeData.js";
 
 export default function TemplePage() {
-  usePageMeta("The Temple | Thenari Theertham", "The deities, architecture and surroundings of Sree Madhyarani Sree Rama Temple.");
+  usePageMeta("The Temple | Thenari Theertham", "The deities, architecture and surroundings of Sree Madhyaranya Sree Rama Temple Thenari.");
   return (
     <div className="page-temple">
       <PageHero theme="theme-maroon" mal="ശ്രീകോവിൽ" title="The Temple" sub={t.subtitle} />

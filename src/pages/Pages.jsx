@@ -16,7 +16,7 @@ import {
 function PageBanner({ title, sub }) {
   usePageMeta(
     `${title} | Thenari Theertham`,
-    `${title} — Thenari Theertham, Sree Madhyarani Sree Rama Temple.`,
+    `${title} — Thenari Theertham, Sree Madhyaranya Sree Rama Temple Thenari.`,
   );
   return (
     <div className="page-banner">
@@ -27,7 +27,7 @@ function PageBanner({ title, sub }) {
 }
 export const TemplePage = () => (
   <>
-    <PageBanner title="The Temple" sub="Sree Madhyarani Sree Rama Temple" />
+    <PageBanner title="The Temple" sub="Sree Madhyaranya Sree Rama Temple Thenari" />
     <DeitySection />
     <ArchitectureSection />
     <TempleTimings />
@@ -35,7 +35,7 @@ export const TemplePage = () => (
 );
 // export const HistoryPage = () => (
 //   <>
-//     <PageBanner title="History" sub="Sree Madhyarani Sree Rama Temple" />
+//     <PageBanner title="History" sub="Sree Madhyaranya Sree Rama Temple Thenari" />
 //     <HeritageIntro />
 //   </>
 // );
