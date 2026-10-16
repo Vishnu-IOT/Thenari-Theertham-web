@@ -9,9 +9,11 @@ import HistoryPage from "./pages/HistoryPage.jsx";
 import FestivalsPage from "./pages/FestivalsPage.jsx";
 import GalleryPage from "./pages/GalleryPage.jsx";
 import VisitContactPage from "./pages/VisitContactPage.jsx";
+import RenovationPage from "./pages/RenovationPage.jsx";
 import Donation from "./pages/Donation.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import { useLang } from "./i18n/LanguageContext.jsx";
+import YouTubeButton from "./components/YouTubeButton.jsx";
 
 /* Scroll to top on page change, or to the #anchor when the link has one. */
 function ScrollToTop() {
@@ -45,12 +47,15 @@ export default function App() {
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/visit" element={<VisitContactPage />} />
           <Route path="/contact" element={<Navigate to="/visit#contact" replace />} />
+          <Route path="/renovation" element={<RenovationPage />} />
+          <Route path="/inauguration-2024" element={<Navigate to="/renovation" replace />} />
           <Route path="/donation" element={<Donation />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
       <BackToTop />
+      <YouTubeButton />
     </>
   );
 }

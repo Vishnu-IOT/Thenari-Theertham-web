@@ -122,7 +122,7 @@
   background: radial-gradient(80% 90% at 15% 10%, #5a1222 0, #331019 55%, var(--night) 100%);
 }
 .sd-wrap { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(2rem, 6vw, 5rem); align-items: start; max-width: 1080px; }
-.sd-intro { position: sticky; top: calc(var(--hh, 80px) + 1.5rem); }
+.sd-intro { position: sticky; top: calc(var(--hh, 80px) + 8rem); }
 .sd-kicker { margin: 0 0 0.6rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
 .sd-intro h2 { margin: 0; color: var(--cream); font-size: clamp(2.2rem, 5vw, 3.3rem); }
 .sd-rule { display: block; width: 72px; height: 3px; margin: 1.2rem 0; background: linear-gradient(90deg, var(--gold), transparent); }

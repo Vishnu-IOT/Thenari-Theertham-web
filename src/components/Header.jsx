@@ -79,6 +79,20 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
   useEffect(() => setOpen(false), [pathname]);
+  /* Publish the real header height so sticky tabs and anchor jumps sit right under it */
+  useEffect(() => {
+    const el = document.querySelector(".site-header");
+    if (!el) return undefined;
+    const set = () => document.documentElement.style.setProperty("--hh-live", `${el.offsetHeight}px`);
+    set();
+    const ro = "ResizeObserver" in window ? new ResizeObserver(set) : null;
+    ro?.observe(el);
+    window.addEventListener("resize", set);
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener("resize", set);
+    };
+  }, []);
   return (
     <header className="site-header">
       <TimingMarquee />

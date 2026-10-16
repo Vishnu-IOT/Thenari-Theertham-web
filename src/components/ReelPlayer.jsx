@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useLang } from "../i18n/LanguageContext.jsx";
 
 export default function ReelPlayer({ reel, title }) {
+  const { tx } = useLang();
   if (reel.file) {
     return (
       <video
@@ -25,7 +27,7 @@ export default function ReelPlayer({ reel, title }) {
   const id = shortcode?.[1] || shortcode?.[2];
 
   if (!id) {
-    return <p>Unable to load this reel. Check its Instagram URL.</p>;
+    return <p>{tx("history.reelError")}</p>;
   }
 
   return (

@@ -32,8 +32,31 @@ function build(o = {}) {
     homeDeities: byIndex(en.homeDeities, o.homeDeities),
     heroSlides: byIndex(en.heroSlides, o.heroSlides),
     poojas: byIndex(en.poojas, o.poojas),
+    poojaRates: byIndex(en.poojaRates, o.poojaRates),
     festivals: byIndex(en.festivals, o.festivals),
     gallery: byIndex(en.gallery, o.gallery),
+    templeFacts: byIndex(en.templeFacts, o.templeFacts),
+    legendChapters: byIndex(en.legendChapters, o.legendChapters),
+    karkidakamItems: byIndex(en.karkidakamItems, o.karkidakamItems),
+    karkidakamDetail: {
+      ...en.karkidakamDetail,
+      ...(o.karkidakamDetail || {}),
+      stats: byIndex(en.karkidakamDetail.stats, o.karkidakamDetail?.stats),
+      blocks: byIndex(en.karkidakamDetail.blocks, o.karkidakamDetail?.blocks),
+    },
+    inauguration: {
+      ...en.inauguration,
+      ...(o.inauguration || {}),
+      story: o.inauguration?.story || en.inauguration.story,
+      facts: byIndex(en.inauguration.facts, o.inauguration?.facts),
+      moments: byIndex(en.inauguration.moments, o.inauguration?.moments),
+      guest: { ...en.inauguration.guest, ...(o.inauguration?.guest || {}) },
+      visitor: { ...en.inauguration.visitor, ...(o.inauguration?.visitor || {}) },
+    },
+    templePeople: en.templePeople.map((g, gi) => ({
+      ...g,
+      entries: byIndex(g.entries, o.templePeople?.[gi]?.entries),
+    })),
   };
 }
 

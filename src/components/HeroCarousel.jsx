@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 // Images live in /public/images/deity — add more files here to add more slides.
 const slides = [
   { src: "/images/deity/1.jpg", pos: "center 16%", alt: "Sree Rama adorned with gold ornaments and flower garlands" },
-  { src: "/images/deity/2.jpg", pos: "center 30%", alt: "Deities decorated with flower garlands on a golden seat" },
+  { src: "/images/deity/2.webp", pos: "center 30%", alt: "Deities decorated with flower garlands on a golden seat" },
   { src: "/images/deity/3.jpg", pos: "center 30%", alt: "Deities adorned with garlands on a golden pedestal" },
 ];
 

@@ -5,6 +5,19 @@
 // =========================================================
 
 import { ta } from "./strings.ta.js";
+import { extra } from "./strings.extra.js";
+
+/* Deep merge: values in `over` replace the base, nested blocks merge. */
+const merge = (base, over = {}) => {
+  const out = { ...base };
+  for (const [k, v] of Object.entries(over)) {
+    out[k] =
+      v && typeof v === "object" && !Array.isArray(v) && base?.[k] && typeof base[k] === "object"
+        ? merge(base[k], v)
+        : v;
+  }
+  return out;
+};
 
 const en = {
   skip: "Skip to content",
@@ -19,7 +32,7 @@ const en = {
   },
   footer: {
     nav: "Footer navigation",
-    pages: "Pages",
+    pages: "Explore",
     timings: "Darshan timings",
     timingsNote: "Timings are subject to change on festival days.",
     visit: "Visit",
@@ -48,8 +61,8 @@ const en = {
     festSub:
       "Dates change every year, so please confirm with the temple before you plan a visit.",
     planVisit: "Plan your visit",
-    ayodhyaMantra: "॥ ശ്രീ രാമ ॥",
-    ram: "ശ്രീ രാമ",
+    ayodhyaMantra: "॥ Hare Rama ॥",
+    ram: "Hare Rama",
   },
   hero: {
     chip: "Sacred prathishta & deities",
@@ -84,6 +97,14 @@ const en = {
     poojaNote:
       "Timings and arrangements can change. {link} to confirm before you plan.",
     poojaNoteLink: "Contact the temple",
+    poojaAll: "See all offerings →",
+    videoKicker: "Watch",
+    videoTitle: "Thenari Theertham on video",
+    videoSub: "The temple, the stone Nandi and the ever-flowing sacred water, as devotees see them.",
+    videoPlay: "Play video: {title}",
+    videoMore: "More videos →",
+    videoFallback: "Thenari Theertham, temple video",
+    videoAria: "Temple video",
     giveTitle: "Offer a lamp, a meal, a prayer",
     giveText:
       "Every offering helps the daily worship, the care of the theertham and the festivals that bring the community together.",
@@ -108,6 +129,9 @@ const en = {
       deities: "Deities",
       theertham: "Theertham",
       seva: "Pooja and Seva",
+      legend: "Saragangatheertha",
+      family: "Temple Committee",
+      karkidakam: "Karkidakam",
       timings: "Timings",
     },
     ch: ["The place", "The tradition", "Worship today"],
@@ -148,9 +172,21 @@ const en = {
     sevaKicker: "Offerings for devotees",
     sevaTitle: "Pooja and Seva",
     sevaText:
-      "Devotees can take part in these offerings and services at the temple. Open any one to see how it is arranged.",
+      "Devotees can take part in these offerings and services at the temple. Palpayasam is offered in the morning and Kadumadhuram in the evening. Open any offering to see how it is arranged.",
     ask: "Ask the temple",
     timingsTitle: "Temple timings",
+    factsKicker: "At a glance",
+    factsTitle: "The temple at a glance",
+    legendKicker: "The legend",
+    legendAlt: "The sacred stone Nandi with water flowing from its mouth",
+    legendTitle: "How the Ganga came to Thenari",
+    legendQuote: "Saragangatheertha, the water that never stops flowing.",
+    legendIntro: "This Sree Rama temple is known as Saragangatheertha. A stone bull stands over the well, and for years water has flowed through its mouth by day and night. Devotees say it is the Ganga, flowing here from Varanasi in Uttar Pradesh. This is the story told of how the water came to Thenari.",
+    legendNote: "As told by tradition and believed by devotees.",
+    karkiKicker: "The Ramayana month",
+    karkiTitle: "Karkidakam at Thenari",
+    karkiSub: "Karkidakam 1 to 31 is the most significant period in the temple's year.",
+    karkiPrathishta: "The consecration day (Prathishta Dinam) falls on the Rohini asterism in the Malayalam month of Medam.",
     support: "Support the temple",
   },
   festivals: {
@@ -162,6 +198,55 @@ const en = {
     cta: "Planning to attend? Call the temple to confirm this year's dates.",
     call: "Call {phone}",
     reach: "Reach Us",
+  },
+  inaug: {
+    title: "Inauguration 2024 | Thenari Theertham",
+    desc: "The 2024 inauguration of the new Mandapam at Sree Madhyaranya Sree Rama Temple Thenari, Elappully, Palakkad.",
+    kicker: "॥ ശ്രീ രാമ ॥",
+    pageTitle: "Inauguration 2024",
+    sub: "The opening of the new Mandapam.",
+    dayKicker: "The day",
+    factsTitle: "At a glance",
+    momentsKicker: "Moments",
+    momentsTitle: "From the opening",
+    guestKicker: "A welcome",
+    guestText: "Devotees and committee members welcomed MLA Ramesh Pisharodi at the temple.",
+    galleryTitle: "Photographs",
+    cta: "Help look after the Mandapam and the temple.",
+    support: "Support the temple",
+    back: "Back to History",
+    more: "Mandapam inauguration, 2024 →",
+  },
+  people: {
+    kicker: "The temple family",
+    title: "Those who serve the temple",
+    sub: "The trustees, the renovation committee and the office bearers who keep Thenari running.",
+    tantri: "Tantri and priests",
+    trustees: "Trustee Board Members",
+    chairman: "Chairman",
+    manager: "Temple Manager: {name}",
+    renovation: "Renovation Committee",
+    patrons: "Patrons",
+    officeBearers: "Office Bearers",
+    vicePresidents: "Vice Presidents",
+    jtSecretaries: "Jt. Secretaries",
+    role: {
+      president: "President",
+      secretary: "Secretary",
+      treasurer: "Treasurer",
+      jtTreasurer: "Jt. Treasurer",
+      manager: "Temple Manager",
+    },
+    glance: "Temple at a glance",
+    all: "All",
+    members: "{n} people",
+    seeInaug: "See the inauguration",
+  },
+  kkd: {
+    kicker: "The Ramayana month",
+    seeAlso: "All festivals",
+    prevAria: "Karkidakam photographs",
+    nextFest: "Other festivals through the year",
   },
   slogan: {
     chip: "Divine Presence",
@@ -324,7 +409,7 @@ const ml = {
   },
   footer: {
     nav: "ഫൂട്ടർ നാവിഗേഷൻ",
-    pages: "പേജുകൾ",
+    pages: "അന്വേഷിക്കുക",
     timings: "ദർശന സമയം",
     timingsNote: "ഉത്സവ ദിനങ്ങളിൽ സമയത്തിൽ മാറ്റം വരുന്നതാണ്.",
     visit: "സന്ദർശിക്കാൻ",
@@ -353,8 +438,8 @@ const ml = {
     festSub:
       "തീയതികൾ ഓരോ വർഷവും മാറും; സന്ദർശനം ആസൂത്രണം ചെയ്യുന്നതിന് മുമ്പ് ക്ഷേത്രത്തിൽ നിന്ന് ഉറപ്പാക്കുക.",
     planVisit: "സന്ദർശനം ആസൂത്രണം ചെയ്യാം",
-    ayodhyaMantra: "॥ ശ്രീ രാമ ॥",
-    ram: "ശ്രീ രാമ",
+    ayodhyaMantra: "॥ ഹരേ രാമ ॥",
+    ram: "ഹരേ രാമ",
   },
   hero: {
     chip: "പുണ്യ പ്രതിഷ്ഠയും ദേവതകളും",
@@ -386,6 +471,14 @@ const ml = {
     poojaNote:
       "സമയക്രമവും ക്രമീകരണങ്ങളും മാറാം. ആസൂത്രണം ചെയ്യുന്നതിന് മുമ്പ് {link} ഉറപ്പാക്കുക.",
     poojaNoteLink: "ക്ഷേത്രവുമായി ബന്ധപ്പെട്ട്",
+    poojaAll: "എല്ലാ വഴിപാടുകളും കാണുക →",
+    videoKicker: "കാണാം",
+    videoTitle: "വീഡിയോയിൽ തേനാരി തീർത്ഥം",
+    videoSub: "ക്ഷേത്രം, കരിങ്കൽ നന്ദി, നിലയ്ക്കാതെ ഒഴുകുന്ന പുണ്യജലം — ഭക്തർ കാണുന്നതുപോലെ.",
+    videoPlay: "വീഡിയോ കാണുക: {title}",
+    videoMore: "കൂടുതൽ വീഡിയോകൾ →",
+    videoFallback: "തേനാരി തീർത്ഥം, ക്ഷേത്ര വീഡിയോ",
+    videoAria: "ക്ഷേത്ര വീഡിയോ",
     giveTitle: "ഒരു വിളക്ക്, ഒരു ഊട്ട്, ഒരു പ്രാർത്ഥന സമർപ്പിക്കൂ",
     giveText:
       "ഓരോ വഴിപാടും നിത്യാരാധനയ്ക്കും തീർത്ഥത്തിന്റെ പരിപാലനത്തിനും സമൂഹത്തെ ഒന്നിപ്പിക്കുന്ന ഉത്സവങ്ങൾക്കും തുണയാകുന്നു.",
@@ -410,6 +503,9 @@ const ml = {
       deities: "ദേവതകൾ",
       theertham: "തീർത്ഥം",
       seva: "പൂജയും സേവയും",
+      legend: "സരഗംഗതീർത്ഥ",
+      karkidakam: "കർക്കിടകം",
+      family: "ക്ഷേത്ര സമിതി",
       timings: "സമയം",
     },
     ch: ["സ്ഥലം", "പാരമ്പര്യം", "ഇന്നത്തെ ആരാധന"],
@@ -450,9 +546,21 @@ const ml = {
     sevaKicker: "ഭക്തർക്കുള്ള വഴിപാടുകൾ",
     sevaTitle: "പൂജയും സേവയും",
     sevaText:
-      "ക്ഷേത്രത്തിലെ ഈ വഴിപാടുകളിലും സേവനങ്ങളിലും ഭക്തർക്ക് പങ്കെടുക്കാം. ഏതെങ്കിലും ഒന്ന് തുറന്ന് അതിന്റെ ക്രമീകരണം അറിയാം.",
+      "ക്ഷേത്രത്തിലെ ഈ വഴിപാടുകളിലും സേവനങ്ങളിലും ഭക്തർക്ക് പങ്കെടുക്കാം. രാവിലെ പാൽപ്പായസവും വൈകിട്ട് കടുമധുരവും സമർപ്പിക്കുന്നു. ഏതെങ്കിലും വഴിപാട് തുറന്ന് അതിന്റെ ക്രമീകരണം അറിയാം.",
     ask: "ക്ഷേത്രത്തോട് ചോദിക്കാം",
     timingsTitle: "ക്ഷേത്ര സമയം",
+    factsKicker: "ഒറ്റനോട്ടത്തിൽ",
+    factsTitle: "ഒറ്റനോട്ടത്തിൽ ക്ഷേത്രം",
+    legendKicker: "ഐതിഹ്യം",
+    legendAlt: "വായിലൂടെ പുണ്യജലം ഒഴുകുന്ന കരിങ്കൽ നന്ദി",
+    legendTitle: "ഗംഗ തേനാരിയിലെത്തിയ കഥ",
+    legendQuote: "ശരഗംഗാതീർത്ഥം — ഒരിക്കലും നിലയ്ക്കാത്ത പുണ്യജലം.",
+    legendIntro: "ശരഗംഗാതീർത്ഥം എന്നറിയപ്പെടുന്ന ശ്രീരാമക്ഷേത്രമാണിത്. കിണറിനു മുകളിൽ ഒരു കരിങ്കൽ കാളയുണ്ട്; അതിന്റെ വായിലൂടെ വർഷങ്ങളായി രാവും പകലും വെള്ളം ഒഴുകുന്നു. ഉത്തർപ്രദേശിലെ വാരണാസിയിലൂടെ ഒഴുകുന്ന ഗംഗയാണ് ഇവിടെയും ഒഴുകുന്നതെന്ന് ഭക്തർ പറയുന്നു. ആ ജലം തേനാരിയിലെത്തിയ കഥ ഇങ്ങനെയാണ്.",
+    legendNote: "പാരമ്പര്യമായി പറഞ്ഞുവരുന്നതും ഭക്തർ വിശ്വസിക്കുന്നതുമായ കഥ.",
+    karkiKicker: "രാമായണമാസം",
+    karkiTitle: "തേനാരിയിലെ കർക്കിടകം",
+    karkiSub: "കർക്കിടകം 1 മുതൽ 31 വരെയാണ് ക്ഷേത്രത്തിലെ വർഷത്തിലെ ഏറ്റവും പ്രധാനപ്പെട്ട കാലം.",
+    karkiPrathishta: "പ്രതിഷ്ഠാദിനം മലയാള മാസമായ മേടത്തിലെ രോഹിണി നക്ഷത്രത്തിലാണ്.",
     support: "ക്ഷേത്രത്തെ പിന്തുണയ്ക്കാം",
   },
   festivals: {
@@ -464,6 +572,55 @@ const ml = {
     cta: "പങ്കെടുക്കാൻ ആഗ്രഹിക്കുന്നുണ്ടോ? ഈ വർഷത്തെ തീയതികൾ ഉറപ്പാക്കാൻ ക്ഷേത്രത്തിൽ വിളിക്കൂ.",
     call: "വിളിക്കുക: {phone}",
     reach: "ബന്ധപ്പെടാം",
+  },
+  inaug: {
+    title: "ഉദ്ഘാടനം 2024 | തേനാരി തീർത്ഥം",
+    desc: "തേനാരി ശ്രീ മധ്യാരണ്യ ശ്രീരാമ ക്ഷേത്രത്തിലെ (എലപ്പുള്ളി, പാലക്കാട്) പുതിയ മണ്ഡപത്തിന്റെ 2024-ലെ ഉദ്ഘാടനം.",
+    kicker: "॥ ശ്രീ രാമ ॥",
+    pageTitle: "ഉദ്ഘാടനം 2024",
+    sub: "പുതിയ മണ്ഡപത്തിന്റെ സമർപ്പണം.",
+    dayKicker: "ആ ദിവസം",
+    factsTitle: "ഒറ്റനോട്ടത്തിൽ",
+    momentsKicker: "നിമിഷങ്ങൾ",
+    momentsTitle: "ഉദ്ഘാടന വേളയിൽ നിന്ന്",
+    guestKicker: "സ്വീകരണം",
+    guestText: "ഭക്തരും കമ്മിറ്റി അംഗങ്ങളും ചേർന്ന് എം.എൽ.എ. രമേഷ് പിഷാരോടിയെ ക്ഷേത്രത്തിൽ സ്വീകരിച്ചു.",
+    galleryTitle: "ചിത്രങ്ങൾ",
+    cta: "മണ്ഡപത്തെയും ക്ഷേത്രത്തെയും പരിപാലിക്കാൻ സഹായിക്കൂ.",
+    support: "ക്ഷേത്രത്തെ സഹായിക്കാം",
+    back: "ചരിത്രത്തിലേക്ക് മടങ്ങുക",
+    more: "മണ്ഡപ ഉദ്ഘാടനം, 2024 →",
+  },
+  people: {
+    kicker: "ക്ഷേത്ര കുടുംബം",
+    title: "ക്ഷേത്രത്തെ സേവിക്കുന്നവർ",
+    sub: "തേനാരിയെ മുന്നോട്ട് നയിക്കുന്ന ട്രസ്റ്റിമാർ, നവീകരണ കമ്മിറ്റി, ഭാരവാഹികൾ.",
+    tantri: "തന്ത്രിയും പുരോഹിതരും",
+    trustees: "ട്രസ്റ്റ് ബോർഡ് അംഗങ്ങൾ",
+    chairman: "ചെയർമാൻ",
+    manager: "ക്ഷേത്രം മാനേജർ: {name}",
+    renovation: "നവീകരണ കമ്മിറ്റി",
+    patrons: "രക്ഷാധികാരികൾ",
+    officeBearers: "ഭാരവാഹികൾ",
+    vicePresidents: "വൈസ് പ്രസിഡന്റുമാർ",
+    jtSecretaries: "ജോയിന്റ് സെക്രട്ടറിമാർ",
+    role: {
+      president: "പ്രസിഡന്റ്",
+      secretary: "സെക്രട്ടറി",
+      treasurer: "ട്രഷറർ",
+      jtTreasurer: "ജോയിന്റ് ട്രഷറർ",
+      manager: "ക്ഷേത്രം മാനേജർ",
+    },
+    glance: "ക്ഷേത്രം ഒറ്റനോട്ടത്തിൽ",
+    all: "എല്ലാവരും",
+    members: "{n} പേർ",
+    seeInaug: "ഉദ്ഘാടനം കാണാം",
+  },
+  kkd: {
+    kicker: "രാമായണമാസം",
+    seeAlso: "എല്ലാ ഉത്സവങ്ങളും",
+    prevAria: "കർക്കിടക ചിത്രങ്ങൾ",
+    nextFest: "വർഷം മുഴുവനുള്ള മറ്റ് ഉത്സവങ്ങൾ",
   },
   slogan: {
     chip: "ദിവ്യ സാന്നിധ്യം",
@@ -614,4 +771,8 @@ const ml = {
   },
 };
 
-export const strings = { en, ml, ta };
+export const strings = {
+  en: merge(en, extra.en),
+  ml: merge(ml, extra.ml),
+  ta: merge(ta, extra.ta),
+};

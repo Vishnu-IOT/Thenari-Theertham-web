@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import ReelPlayer, { CoverImg } from "../components/ReelPlayer.jsx";
-import { titleOf, videoItems as videos, reelItems as reels, gallery as photos, instagramProfile } from "../data/templeData.js";
+import {
+  titleOf,
+  templeCommittee,
+  videoItems as videos,
+  reelItems as reels,
+  gallery as photos,
+  instagramProfile,
+} from "../data/templeData.js";
 import { useData } from "../data/useData.js";
 import { useLang } from "../i18n/LanguageContext.jsx";
 import {
@@ -12,46 +19,103 @@ import {
   usePageMeta,
 } from "../components/ui.jsx";
 
-const sectionIds = ["heritage", "deities", "theertham", "seva", "timings"];
-if (videos.length || reels.length) sectionIds.splice(1, 0, "video");
+const sectionIds = [
+  "heritage",
+  "family",
+  "legend",
+  ...(videos.length || reels.length ? ["video"] : []),
+  "deities",
+  "theertham",
+  "seva",
+  "timings",
+];
 
-/* Sticky in-page navigation that follows the reader */
+/* Sticky in-page navigation. It sits directly under the site header, and every
+   section starts below it: the bar's height is published as --jump-h and the
+   sections use it as their scroll margin (see temple-people.css). */
 function JumpNav() {
   const { tx } = useLang();
-  const sections = sectionIds.map((id) => ({ id, label: tx(`history.s.${id}`) }));
+  const sections = sectionIds.map((id) => ({
+    id,
+    label: tx(`history.s.${id}`),
+  }));
   const [active, setActive] = useState("heritage");
+  const bar = useRef(null);
+
   useEffect(() => {
-    const els = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
-    const io = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
-      { rootMargin: "-45% 0px -50% 0px" },
-    );
-    els.forEach((el) => io.observe(el));
+    const offset = () => {
+      const hh =
+        parseFloat(
+          getComputedStyle(document.documentElement).getPropertyValue(
+            "--hh-live",
+          ),
+        ) || 100;
+      return hh + (bar.current?.offsetHeight || 52);
+    };
+    const publish = () =>
+      document.documentElement.style.setProperty(
+        "--jump-h",
+        `${bar.current?.offsetHeight || 52}px`,
+      );
+    publish();
+
+    let io;
+    const observe = () => {
+      io?.disconnect();
+      io = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
+        { rootMargin: `-${Math.round(offset()) + 8}px 0px -55% 0px` },
+      );
+      sectionIds.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) io.observe(el);
+      });
+    };
+    observe();
+    const onResize = () => {
+      publish();
+      observe();
+    };
     const top = () => {
       if (window.scrollY < 200) setActive("heritage");
     };
+    window.addEventListener("resize", onResize);
     window.addEventListener("scroll", top, { passive: true });
     return () => {
-      io.disconnect();
+      io?.disconnect();
+      window.removeEventListener("resize", onResize);
       window.removeEventListener("scroll", top);
+      document.documentElement.style.removeProperty("--jump-h");
     };
   }, []);
+
+  /* keep the active tab visible inside the horizontally scrolling bar */
+  useEffect(() => {
+    bar.current
+      ?.querySelector("a.on")
+      ?.scrollIntoView({
+        block: "nearest",
+        inline: "center",
+        behavior: "smooth",
+      });
+  }, [active]);
+
   return (
-    <nav className="jump" aria-label={tx("history.jump")}>
+    <nav className="jump" ref={bar} aria-label={tx("history.jump")}>
       <div className="container jump-inner">
         {sections.map((s) => (
           <a
             key={s.id}
             href={`#${s.id}`}
             className={active === s.id ? "on" : ""}
+            aria-current={active === s.id ? "true" : undefined}
             onClick={(e) => {
               e.preventDefault();
+              setActive(s.id);
               document
                 .getElementById(s.id)
-                ?.scrollIntoView({ behavior: "smooth" });
+                ?.scrollIntoView({ behavior: "smooth", block: "start" });
             }}
           >
             {s.label}
@@ -65,7 +129,10 @@ function JumpNav() {
 function Heritage() {
   const { t } = useData();
   const { tx } = useLang();
-  const chapters = t.heritage.map((text, i) => ({ title: tx(`history.ch.${i}`), text }));
+  const chapters = t.heritage.map((text, i) => ({
+    title: tx(`history.ch.${i}`),
+    text,
+  }));
   return (
     <section id="heritage" className="section heritage">
       <div className="container heritage-grid">
@@ -101,6 +168,228 @@ function Heritage() {
   );
 }
 
+/* The temple family: Tantri and priests, then the trustee board, renovation
+   committee and office bearers as one joined band, with vice presidents and
+   joint secretaries underneath. Names live in templeData.js (templeCommittee).
+   Entries marked draft show only in `npm run dev`. */
+const showEntry = (e) => !e.draft || import.meta.env.DEV;
+
+const IconFleur = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.4"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M12 3c-2 2.4-2 5 0 7 2-2 2-4.6 0-7Z" />
+    <path d="M12 10v10M8.5 20h7" />
+    <path d="M12 12c-1.2-2.4-4.4-3-6-1.4-1.4 1.4-.8 4 1.6 4.4 1.8.3 3.2-.6 4.4-3Z" />
+    <path d="M12 12c1.2-2.4 4.4-3 6-1.4 1.4 1.4.8 4-1.6 4.4-1.8.3-3.2-.6-4.4-3Z" />
+  </svg>
+);
+const IconTrident = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.6"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M12 21V8M7 4v5a5 5 0 0 0 10 0V4M12 3v5" />
+    <path d="M5.5 5.5 7 4l1.5 1.5M15.5 5.5 17 4l1.5 1.5M10.5 4.5 12 3l1.5 1.5" />
+    <path d="M9.5 21h5" />
+  </svg>
+);
+const IconStar = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 2c.6 4.6 2.4 8.4 7 10-4.6 1.6-6.4 5.4-7 10-.6-4.6-2.4-8.4-7-10 4.6-1.6 6.4-5.4 7-10Z" />
+  </svg>
+);
+
+function TempleFamily() {
+  const { templePeople } = useData();
+  const { tx } = useLang();
+  const c = templeCommittee;
+  const priests = (
+    templePeople.find((g) => g.id === "priests")?.entries || []
+  ).filter(showEntry);
+  const managerLabel = tx("people.role.manager");
+
+  return (
+    <section id="family" className="section fm-sec">
+      <div className="container">
+        <div className="fm-head">
+          <Reveal>
+            <p className="kicker">{tx("people.kicker")}</p>
+          </Reveal>
+          <Reveal delay={80}>
+            <h2>{tx("people.title")}</h2>
+          </Reveal>
+          <Reveal delay={140}>
+            <p className="fm-sub">{tx("people.sub")}</p>
+          </Reveal>
+        </div>
+
+        {priests.length > 0 && (
+          <Reveal className="fm-priests">
+            <span className="fm-priests-label">{tx("people.tantri")}</span>
+            <ul>
+              {priests.map((p) => (
+                <li key={p.id} className={p.draft ? "is-draft" : ""}>
+                  <b>{p.name}</b>
+                  <small>{p.role}</small>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        )}
+
+        <Reveal className="fm-board">
+          {/* Trustees */}
+          <section
+            className="fm-col fm-trustees"
+            aria-labelledby="fm-h-trustees"
+          >
+            <header className="fm-col-head">
+              <span className="fm-ico">
+                <IconFleur />
+              </span>
+              <h3 id="fm-h-trustees">{tx("people.trustees")}</h3>
+            </header>
+            <ul className="fm-names">
+              {c.trustees.map((m) => (
+                <li key={m.name}>
+                  <span>{m.name}</span>
+                  {m.chair && (
+                    <em className="fm-tag">{tx("people.chairman")}</em>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <p className="fm-manager">
+              {tx("people.manager", { name: c.manager })}
+            </p>
+          </section>
+
+          {/* Renovation committee: the dark centre panel */}
+          <section className="fm-col fm-reno" aria-labelledby="fm-h-reno">
+            <header className="fm-col-head">
+              <span className="fm-ico">
+                <IconTrident />
+              </span>
+              <h3 id="fm-h-reno">{tx("people.renovation")}</h3>
+            </header>
+            <p className="fm-reno-label">{tx("people.patrons")}</p>
+            <ul className="fm-plaques">
+              {c.patrons.map((n) => (
+                <li key={n}>{n}</li>
+              ))}
+            </ul>
+          </section>
+
+          {/* Office bearers */}
+          <section className="fm-col fm-office" aria-labelledby="fm-h-office">
+            <header className="fm-col-head">
+              <span className="fm-ico">
+                <IconStar />
+              </span>
+              <h3 id="fm-h-office">{tx("people.officeBearers")}</h3>
+            </header>
+            <dl className="fm-ledger">
+              {c.officeBearers.map((o) => (
+                <div key={o.role}>
+                  <dt>{tx(`people.role.${o.role}`)}</dt>
+                  <dd>{o.name || managerLabel}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        </Reveal>
+
+        <Reveal className="fm-band" delay={80}>
+          <div className="fm-group">
+            <h3>{tx("people.vicePresidents")}</h3>
+            <ul className="fm-chips">
+              {c.vicePresidents.map((n) => (
+                <li key={n}>{n}</li>
+              ))}
+            </ul>
+          </div>
+          <span className="fm-gem" aria-hidden="true" />
+          <div className="fm-group">
+            <h3>{tx("people.jtSecretaries")}</h3>
+            <ul className="fm-chips">
+              {c.jtSecretaries.map((n) => (
+                <li key={n}>{n}</li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* The legend of Sree Rama Theertham: a real sequence, so the steps are numbered */
+function Legend() {
+  const { legendChapters } = useData();
+  const { tx } = useLang();
+  return (
+    <section id="legend" className="section legend-sec">
+      <div className="container">
+        <div className="lg-top">
+          <div>
+            <Reveal>
+              <p className="kicker">{tx("history.legendKicker")}</p>
+            </Reveal>
+            <Reveal delay={80}>
+              <h2>{tx("history.legendTitle")}</h2>
+            </Reveal>
+            <Reveal delay={160}>
+              <blockquote className="pull">
+                {tx("history.legendQuote")}
+              </blockquote>
+            </Reveal>
+            <Reveal delay={220}>
+              <p className="lead">{tx("history.legendIntro")}</p>
+            </Reveal>
+          </div>
+          <Reveal variant="arch" className="lg-photo">
+            <img
+              src="/images/gallery/27.webp"
+              alt={tx("history.legendAlt")}
+              width="765"
+              height="1020"
+              loading="lazy"
+              decoding="async"
+            />
+          </Reveal>
+        </div>
+
+        <ol className="lg-steps">
+          {legendChapters.map((c, i) => (
+            <Reveal as="li" key={c.title} variant={i % 2 ? "right" : "left"} delay={60} className={`lg-step ${i % 2 ? "is-right" : "is-left"}`}>
+              <span className="lg-num" aria-hidden="true">
+                {i + 1}
+              </span>
+              <div className="lg-body">
+                <h3>{c.title}</h3>
+                <p>{c.text}</p>
+              </div>
+            </Reveal>
+          ))}
+        </ol>
+        <p className="lg-note">{tx("history.legendNote")}</p>
+      </div>
+    </section>
+  );
+}
+
 /* YouTube loads only after a tap, so the page stays fast on mobile data */
 function VideoCard({ id, title }) {
   const { tx } = useLang();
@@ -122,7 +411,9 @@ function VideoCard({ id, title }) {
             type="button"
             className="video-poster"
             onClick={() => setPlay(true)}
-            aria-label={tx("history.playVideo", { title: title || tx("history.videoFallback") })}
+            aria-label={tx("history.playVideo", {
+              title: title || tx("history.videoFallback"),
+            })}
           >
             {thumbOk && (
               <img
@@ -164,9 +455,22 @@ function ReelCard({ reel, index }) {
             onClick={() => setPlay(true)}
             aria-label={tx("history.playReel", { title: label })}
           >
-            <CoverImg src={reel.cover} fallback={fallback} alt="" loading="lazy" decoding="async" />
+            <CoverImg
+              src={reel.cover}
+              fallback={fallback}
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
             <span className="rl-badge" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <rect x="3" y="3" width="18" height="18" rx="5" />
                 <circle cx="12" cy="12" r="4.2" />
                 <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" />
@@ -174,7 +478,9 @@ function ReelCard({ reel, index }) {
               {tx("history.tabReels")}
             </span>
             <span className="rl-play" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+              <svg viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
             </span>
             <span className="rl-cap">
               <b>{label}</b>
@@ -217,7 +523,9 @@ function VideoSection() {
   const go = (dir) => {
     const el = track.current;
     const card = el.querySelector(".video-slide");
-    const step = card ? card.getBoundingClientRect().width + 16 : el.clientWidth * 0.8;
+    const step = card
+      ? card.getBoundingClientRect().width + 16
+      : el.clientWidth * 0.8;
     el.scrollBy({ left: dir * step, behavior: "smooth" });
   };
 
@@ -231,13 +539,39 @@ function VideoSection() {
         />
 
         {hasVideos && hasReels && (
-          <div className="rl-tabs" role="tablist" aria-label={tx("history.tabs")}>
-            <button type="button" role="tab" aria-selected={!isReels} className={!isReels ? "on" : ""} onClick={() => setTab("videos")}>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+          <div
+            className="rl-tabs"
+            role="tablist"
+            aria-label={tx("history.tabs")}
+          >
+            <button
+              type="button"
+              role="tab"
+              aria-selected={!isReels}
+              className={!isReels ? "on" : ""}
+              onClick={() => setTab("videos")}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 5v14l11-7z" />
+              </svg>
               {tx("history.tabVideos")} <small>{videos.length}</small>
             </button>
-            <button type="button" role="tab" aria-selected={isReels} className={isReels ? "on" : ""} onClick={() => setTab("reels")}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={isReels}
+              className={isReels ? "on" : ""}
+              onClick={() => setTab("reels")}
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
                 <rect x="3" y="3" width="18" height="18" rx="5" />
                 <circle cx="12" cy="12" r="4.2" />
                 <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" />
@@ -253,7 +587,9 @@ function VideoSection() {
             className="video-arrow prev"
             onClick={() => go(-1)}
             disabled={edge.start}
-            aria-label={isReels ? tx("history.reelPrev") : tx("history.videoPrev")}
+            aria-label={
+              isReels ? tx("history.reelPrev") : tx("history.videoPrev")
+            }
           >
             ‹
           </button>
@@ -262,7 +598,9 @@ function VideoSection() {
             ref={track}
             onScroll={update}
             tabIndex={0}
-            aria-label={isReels ? tx("history.reelTrack") : tx("history.videoTrack")}
+            aria-label={
+              isReels ? tx("history.reelTrack") : tx("history.videoTrack")
+            }
           >
             {isReels
               ? reels.map((r, i) => (
@@ -281,7 +619,9 @@ function VideoSection() {
             className="video-arrow next"
             onClick={() => go(1)}
             disabled={edge.end}
-            aria-label={isReels ? tx("history.reelNext") : tx("history.videoNext")}
+            aria-label={
+              isReels ? tx("history.reelNext") : tx("history.videoNext")
+            }
           >
             ›
           </button>
@@ -289,7 +629,12 @@ function VideoSection() {
 
         {isReels && instagramProfile && (
           <p className="rl-follow">
-            <a className="btn btn-gold" href={instagramProfile} target="_blank" rel="noopener noreferrer">
+            <a
+              className="btn btn-gold"
+              href={instagramProfile}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {tx("history.followIG")}
             </a>
           </p>
@@ -306,15 +651,31 @@ function Deities() {
   return (
     <section id="deities" className="section deities-sec">
       <div className="container">
-        <SectionTitle kicker={tx("history.deityKicker")} title={tx("history.deityTitle")} />
+        <SectionTitle
+          kicker={tx("history.deityKicker")}
+          title={tx("history.deityTitle")}
+        />
         <div className="dz-list">
           {deities.map((d, i) => (
-            <Reveal key={d.id} as="article" className={`dz-row ${i % 2 ? "flip" : ""}`}>
+            <Reveal
+              key={d.id}
+              as="article"
+              className={`dz-row ${i % 2 ? "flip" : ""}`}
+            >
               <figure className="dz-photo">
-                <img src={d.image} alt={d.name} loading="lazy" decoding="async" />
+                <img
+                  src={d.image}
+                  alt={d.name}
+                  loading="lazy"
+                  decoding="async"
+                />
               </figure>
               <div className="dz-text">
-                <p className="dz-kicker">{d.id === "rama" ? tx("common.principal") : tx("common.sanctumDeity")}</p>
+                <p className="dz-kicker">
+                  {d.id === "rama"
+                    ? tx("common.principal")
+                    : tx("common.sanctumDeity")}
+                </p>
                 <h3>{d.name}</h3>
                 <span className="dz-rule" aria-hidden="true" />
                 <p className="dz-desc">{d.text}</p>
@@ -361,6 +722,15 @@ function Theertham() {
               alt={tx("history.boatAlt")}
               loading="lazy"
             />
+            {/* <video
+              src="/images/temple/nandi.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label={tx("history.boatAlt")}
+            /> */}
           </Reveal>
         </div>
         <div className="water-cards">
@@ -420,7 +790,14 @@ function Seva() {
                   aria-controls={`sd-${i}`}
                 >
                   <span className="sd-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <path d="M12 3c1.6 2.2 2.4 3.8 2.4 5.2a2.4 2.4 0 0 1-4.8 0C9.6 6.8 10.4 5.2 12 3Z" />
                       <path d="M4 13h16c0 3.9-3.6 7-8 7s-8-3.1-8-7Z" />
                     </svg>
@@ -452,7 +829,10 @@ function Timings() {
   return (
     <section id="timings" className="section timings">
       <div className="container">
-        <SectionTitle kicker={tx("common.darshan")} title={tx("history.timingsTitle")} />
+        <SectionTitle
+          kicker={tx("common.darshan")}
+          title={tx("history.timingsTitle")}
+        />
         <Reveal className="timing-board">
           <div>
             <span>{tx("common.morning")}</span>
@@ -483,7 +863,7 @@ export default function HistoryPage() {
   const { tx } = useLang();
   usePageMeta(tx("history.title"), tx("history.desc"));
   return (
-    <>
+    <div className="history-page">
       <PageHero
         kicker={tx("common.ayodhyaMantra")}
         title={tx("history.pageTitle")}
@@ -493,11 +873,13 @@ export default function HistoryPage() {
       />
       <JumpNav />
       <Heritage />
+      <TempleFamily />
+      <Legend />
       <VideoSection />
       <Deities />
       <Theertham />
       <Seva />
       <Timings />
-    </>
+    </div>
   );
 }

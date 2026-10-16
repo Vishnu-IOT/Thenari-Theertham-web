@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useData } from "../data/useData.js";
 import { useLang } from "../i18n/LanguageContext.jsx";
-import { Embers } from "./ui.jsx";
+import { Embers, Ornament } from "./ui.jsx";
 
 /* Framed card: tag chip, photo with caption overlay, progress bars + arrows */
 function DeitySlides() {
@@ -84,7 +84,7 @@ export default function Hero() {
   };
   return (
     <section className="hero" aria-labelledby="hero-title">
-      <img className="hero-bg" src="/images/temple/hero-bg.png" alt="" aria-hidden="true" fetchpriority="high" decoding="async" />
+      <img className="hero-bg" src="/images/temple/hero-bg.jpg" alt="" aria-hidden="true" fetchpriority="high" decoding="async" />
       <span className="hero-veil" aria-hidden="true" />
       <Embers />
       <div className="container hero-inner">
@@ -102,6 +102,7 @@ export default function Hero() {
           <p className="hero-sub rise" style={{ "--d": ".6s" }}>
             {t.subtitle}
           </p>
+          <Ornament className="hero-ornament rise" />
           <p className="hero-tag rise" style={{ "--d": ".75s" }}>
             {t.tagline}
           </p>
@@ -115,10 +116,10 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="hero-stage">
+        {/* <div className="hero-stage">
           <span className="hero-halo" aria-hidden="true" />
           <DeitySlides />
-        </div>
+        </div> */}
       </div>
       <a className="scroll-cue" href="#heritage" onClick={scrollNext} aria-label={tx("hero.scroll")}>
         <span />

@@ -1,6 +1,6 @@
 import Hero from "../components/Hero.jsx";
 import HomeFestivals from "../components/HomeFestivals.jsx";
-import { HeritageIntro, TheerthamSection, DeitySection, PoojaSection, Give, Visit } from "../components/HomeSections.jsx";
+import { HeritageIntro, TheerthamSection, DeitySection, PoojaSection, HomeVideo, Give, Visit } from "../components/HomeSections.jsx";
 import { usePageMeta } from "../components/ui.jsx";
 import { useLang } from "../i18n/LanguageContext.jsx";
 
@@ -14,6 +14,7 @@ export default function Home() {
       <TheerthamSection />
       <DeitySection />
       <PoojaSection />
+      <HomeVideo />
       <HomeFestivals />
       <Give />
       <Visit />

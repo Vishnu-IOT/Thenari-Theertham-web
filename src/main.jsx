@@ -15,4 +15,7 @@ import './styles/visit.css'
 import './styles/deities.css'
 import './styles/lang.css'
 import './styles/upgrade.css'
+import './styles/temple-update.css'
+import './styles/temple-people.css'
+import './styles/refresh.css'
 createRoot(document.getElementById('root')).render(<LanguageProvider><BrowserRouter><App /></BrowserRouter></LanguageProvider>)

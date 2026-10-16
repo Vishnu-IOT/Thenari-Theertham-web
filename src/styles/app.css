@@ -717,15 +717,15 @@ p {
   margin-top: 1rem;
   color: var(--ink-soft);
 }
-.sec-title.light h2 {
+/* .sec-title.light h2 {
   color: var(--cream);
-}
+} */
 .sec-title.light .kicker {
   color: var(--gold);
 }
-.sec-title.light .sub {
-  color: rgba(251, 243, 225, 0.78);
-}
+  /* .sec-title.light .sub {
+    color: rgba(251, 243, 225, 0.78);
+  } */
 .ornament {
   display: flex;
   align-items: center;

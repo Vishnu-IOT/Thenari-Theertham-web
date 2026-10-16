@@ -16,6 +16,21 @@ export const pageSlogans = {
     },
   },
 
+  "/renovation": {
+    en: {
+      line1: "Ramo vigrahavan dharmas sadhuh satya-parakramah |",
+      line2: "Raja sarvasya lokasya devanam maghavan-iva ||",
+    },
+    ml: {
+      line1: "രാമോ വിഗ്രഹവാൻ ധർമ്മസ്സ സാധുസ്സത്യപരാക്രമഃ |",
+      line2: "രാജാ സർവസ്യ ലോകസ്യ ദേവാനാം മഘവാനിവ ||",
+    },
+    ta: {
+      line1: "ராமோ விக்ரஹவான் தர்மஹ சாதுஹ் சத்ய பராக்ரமஹ |",
+      line2: "ராஜா ஸர்வஸ்ய லோகஸ்ய தேவானாம் இவ வாஸவஹ ||",
+    },
+  },
+
   "/festivals": {
     en: {
       line1: "Konvasmin saampratam loke gunavaan kashcha veeryavaan |",
